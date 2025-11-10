@@ -78,9 +78,10 @@ header nav a{
   border-radius:6px;
 }
 header nav a:hover{color:var(--light-blue);background:rgba(255,255,255,0.03)}
+
 header .admin-btn, header .menu-btn{
   font-size:0.9rem;
-  padding:4px 8px;
+  padding:6px 12px;
   cursor:pointer;
   border-radius:6px;
   border:1px solid var(--cream);
@@ -91,7 +92,6 @@ header .admin-btn, header .menu-btn{
 header .admin-btn:hover, header .menu-btn:hover{
   background:var(--cream); color:var(--navy);
 }
-header .hamburger{display:none;} /* hide default hamburger */
 
 /* MAIN CONTENT */
 main{padding-top:70px;}
@@ -254,17 +254,27 @@ iframe.pdf-frame{
     gap:8px;
     max-height:0;
     overflow:hidden;
-    transition:max-height 0.3s ease;
+    transition:max-height 0.4s ease;
     border-bottom:1px solid var(--cream);
     border-radius:0 0 8px 8px;
     z-index:999;
   }
   header nav.show{max-height:300px;}
-  header .menu-btn{
-    display:inline-block;
+  
+  /* unify menu/admin button size */
+  header .menu-btn, header .admin-btn{
+    font-size:0.85rem;
+    padding:6px 14px;
   }
-  header .admin-btn{font-size:0.8rem; padding:2px 6px;}
-  main{padding-top:95px;}
+  
+  main{padding-top:80px;}
+  
+  /* move content slightly higher */
+  section.page{
+    justify-content:flex-start;
+    padding-top:40px;
+  }
+  
   .title{font-size:clamp(1.4rem,5vw,2rem);}
   .lead{font-size:clamp(0.85rem,2vw,1rem);}
   .cta{padding:8px 16px;font-size:0.85rem;}
@@ -375,10 +385,12 @@ function showSection(id){
   document.querySelectorAll('.page').forEach(s=>s.style.display='none');
   document.getElementById(id).style.display='flex';
   if(id==='papers') renderPapers();
+  toggleMenu(false); // close menu on mobile when clicking link
 }
 
-function toggleMenu(){
+function toggleMenu(forceClose=false){
   const nav=document.getElementById('navLinks');
+  if(forceClose){nav.classList.remove('show'); return;}
   nav.classList.toggle('show');
 }
 
