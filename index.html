@@ -261,7 +261,6 @@ iframe.pdf-frame{
   }
   header nav.show{max-height:300px;}
   
-  /* unify menu/admin button size */
   header .menu-btn, header .admin-btn{
     font-size:0.85rem;
     padding:6px 14px;
@@ -269,10 +268,11 @@ iframe.pdf-frame{
   
   main{padding-top:80px;}
   
-  /* move content slightly higher */
+  /* move content slightly higher and fill more page */
   section.page{
     justify-content:flex-start;
-    padding-top:40px;
+    padding-top:60px;
+    min-height:calc(100vh - 60px);
   }
   
   .title{font-size:clamp(1.4rem,5vw,2rem);}
@@ -385,7 +385,7 @@ function showSection(id){
   document.querySelectorAll('.page').forEach(s=>s.style.display='none');
   document.getElementById(id).style.display='flex';
   if(id==='papers') renderPapers();
-  toggleMenu(false); // close menu on mobile when clicking link
+  toggleMenu(false); // close menu on mobile
 }
 
 function toggleMenu(forceClose=false){
