@@ -6,214 +6,199 @@
 <title>Global Youth Journal</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --navy: #0D1B2A;
-  --navy2: #14263E;
-  --cream: #FDFBF7;
-  --deep-cream: #E6E1D8;
-  --light-blue: #A9D6E5;
-  --brown: #B08968;
+:root{
+  --navy:#0D1B2A;
+  --navy2:#14263E;
+  --cream:#FDFBF7;
+  --deep-cream:#E6E1D8;
+  --light-blue:#A9D6E5;
+  --brown:#B08968;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+*{box-sizing:border-box;margin:0;padding:0}
 
-body {
-  font-family: "Poppins", system-ui, sans-serif;
+html, body {
+  height:100%;
+  scroll-behavior:smooth;
+  font-family:"Poppins",system-ui,sans-serif;
   color: var(--cream);
+  overflow-x:hidden;
   background: radial-gradient(at 20% 30%, var(--navy) 0%, transparent 60%),
               radial-gradient(at 80% 20%, var(--navy2) 0%, transparent 60%),
               radial-gradient(at 50% 80%, var(--deep-cream) 0%, transparent 60%),
               radial-gradient(at 30% 60%, var(--light-blue) 0%, transparent 60%),
               radial-gradient(at 70% 70%, var(--brown) 0%, transparent 60%);
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-size: 200% 200%;
   animation: bgShift 40s ease-in-out infinite;
-  overflow-x: hidden;
-  min-height: 100vh;
-  text-align: center;
+  text-align:center;
 }
 
 @keyframes bgShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {background-position: 0% 50%, 50% 0%, 100% 100%, 0% 100%, 50% 50%;}
+  25% {background-position: 50% 100%, 100% 50%, 0% 50%, 50% 0%, 75% 25%;}
+  50% {background-position: 100% 50%, 0% 100%, 50% 0%, 100% 50%, 25% 75%;}
+  75% {background-position: 50% 0%, 100% 100%, 0% 50%, 75% 75%, 50% 25%;}
+  100% {background-position: 0% 50%, 50% 0%, 100% 100%, 0% 100%, 50% 50%;}
 }
 
 /* HEADER */
-header {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(10, 18, 26, 0.65);
-  backdrop-filter: blur(6px);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  padding: 10px 20px;
-  z-index: 1000;
+header{
+  position: fixed; left:0; right:0; top:0;
+  height:72px;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:0 28px;
+  background: rgba(10,18,26,0.65);
+  backdrop-filter:blur(6px);
+  border-bottom:1px solid rgba(255,255,255,0.03);
+  z-index:1000;
+  flex-wrap:wrap;
 }
 
-.brand {
-  font-family: "Playfair Display", serif;
-  font-size: 1.3rem;
-  color: var(--cream);
+.brand{font-family:"Playfair Display",serif;font-size:1.4rem;color:var(--cream);letter-spacing:0.6px}
+
+.nav-buttons{display:flex;gap:10px}
+
+.menu-btn, .admin-btn{
+  background:none;
+  border:1px solid var(--cream);
+  color:var(--cream);
+  font-weight:600;
+  padding:6px 14px;
+  border-radius:6px;
+  cursor:pointer;
+  transition:all 0.3s ease;
 }
 
-.nav-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.menu-btn, .admin-btn {
-  background: none;
-  border: 1px solid var(--cream);
-  color: var(--cream);
-  font-weight: 600;
-  font-size: 0.95rem;
-  padding: 6px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.menu-btn:hover, .admin-btn:hover {
+.menu-btn:hover, .admin-btn:hover{
   background: var(--light-blue);
   color: var(--navy);
 }
 
-.dropdown {
-  display: none;
-  flex-direction: column;
-  position: absolute;
-  top: 100%;
-  right: 0;
+.dropdown{
+  display:none;
+  flex-direction:column;
+  position:absolute;
+  top:72px;
+  right:28px;
   background: rgba(10,18,26,0.95);
-  width: 100%;
-  max-width: 280px;
-  border-radius: 0 0 10px 10px;
-  overflow: hidden;
-  animation: slideDown 0.3s ease forwards;
+  border-radius:0 0 10px 10px;
+  overflow:hidden;
 }
 
-.dropdown a {
+.dropdown a{
+  padding:12px;
+  text-decoration:none;
   color: var(--cream);
-  padding: 12px;
-  text-decoration: none;
-  font-weight: 600;
-  border-top: 1px solid rgba(255,255,255,0.1);
+  font-weight:600;
+  border-top:1px solid rgba(255,255,255,0.1);
 }
 
-.dropdown a:hover {
+.dropdown a:hover{
   background: rgba(255,255,255,0.1);
 }
 
-.show {
-  display: flex;
-}
+.show{display:flex; animation:slideDown 0.3s ease forwards;}
 
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes slideDown{
+  from {opacity:0; transform:translateY(-10px);}
+  to {opacity:1; transform:translateY(0);}
 }
 
 /* MAIN */
-main {
-  padding-top: 80px;
+main{padding-top:80px}
+
+section.page{
+  min-height:calc(100vh - 80px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:40px 20px;
+  display:none;
 }
 
-section.page {
-  min-height: calc(100vh - 80px);
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 20px;
+section.page.active{display:flex}
+
+.title{
+  font-family:"Playfair Display",serif;
+  font-size:clamp(2rem,5vw,3rem);
+  color:var(--cream);
+  margin-bottom:16px;
 }
 
-section.page.active {
-  display: flex;
+.lead{
+  font-size:clamp(1rem,2.5vw,1.2rem);
+  color:rgba(255,255,255,0.92);
+  max-width:720px;
+  line-height:1.6;
+  margin:0 auto;
 }
 
-.title {
-  font-family: "Playfair Display", serif;
-  font-size: clamp(2rem, 6vw, 2.8rem);
-  color: var(--cream);
-  margin-bottom: 18px;
+.filter-btns{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin-top:18px;
 }
 
-.lead {
-  font-size: clamp(1rem, 2.4vw, 1.2rem);
-  max-width: 720px;
-  line-height: 1.6;
-  color: rgba(255,255,255,0.9);
-}
-
-.filter-btns {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 18px;
-}
-
-.filter-btns button {
-  padding: 10px 20px;
-  border-radius: 8px;
-  border: none;
+.filter-btns button{
+  padding:10px 20px;
+  border:none;
+  border-radius:8px;
   background: var(--navy2);
   color: var(--cream);
-  cursor: pointer;
-  font-weight: 600;
+  cursor:pointer;
+  font-weight:600;
   transition: all 0.3s ease;
 }
 
-.filter-btns button:hover {
+.filter-btns button:hover{
   background: var(--light-blue);
   color: var(--navy);
 }
 
+/* Paper Cards */
+.papers-list{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  margin-top:20px;
+  width:100%;
+  max-width:720px;
+  align-items:center;
+}
+
+.paper-card{
+  background: rgba(253,251,247,0.95);
+  color: var(--navy);
+  padding:14px 18px;
+  border-radius:10px;
+  width:100%;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  text-align:left;
+}
+
+.paper-card:hover{
+  background: var(--light-blue);
+  color: var(--navy);
+}
+
+.paper-title{font-weight:700;font-size:1.1rem;}
+.paper-meta{font-size:0.95rem;color:rgba(0,0,0,0.75);margin-top:4px;}
+
 /* MOBILE */
-@media (max-width: 700px) {
-  header {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 12px 18px;
-  }
-
-  .brand {
-    margin-bottom: 8px;
-  }
-
-  .nav-buttons {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .menu-btn, .admin-btn {
-    flex: 1;
-    text-align: center;
-    padding: 8px;
-    border-radius: 8px;
-  }
-
-  .dropdown {
-    width: 100%;
-    max-width: 100%;
-    text-align: center;
-  }
-
-  section.page {
-    padding: 20px;
-    justify-content: center;
-  }
-
-  .title {
-    font-size: 1.8rem;
-  }
-
-  .lead {
-    font-size: 1rem;
-  }
+@media (max-width:700px){
+  header{flex-direction:column;align-items:flex-start;padding:12px 18px}
+  .brand{margin-bottom:8px}
+  .nav-buttons{width:100%;justify-content:space-between}
+  .menu-btn, .admin-btn{flex:1;text-align:center;padding:8px;border-radius:8px}
+  .dropdown{width:100%;right:0;text-align:center}
+  section.page{padding:20px;justify-content:center}
+  .title{font-size:1.8rem}
+  .lead{font-size:1rem}
+  .paper-card{text-align:center}
 }
 </style>
 </head>
@@ -236,7 +221,7 @@ section.page.active {
 <main>
   <section id="home" class="page active">
     <div class="title">Empowering Young Minds, One Paper at a Time</div>
-    <div class="lead">GlobalYouthJournal is a youth-led initiative providing a <strong>free</strong> platform for student researchers and journalists to publish their work.</div>
+    <div class="lead">GlobalYouthJournal is a youth-led initiative providing a <strong>FREE</strong> platform for student researchers and journalists to publish their work.</div>
   </section>
 
   <section id="about" class="page">
@@ -248,11 +233,12 @@ section.page.active {
     <div class="title">Papers</div>
     <div class="lead">Browse published student research by category.</div>
     <div class="filter-btns">
-      <button>All</button>
-      <button>Law/Politics</button>
-      <button>STEM</button>
-      <button>Articles</button>
+      <button onclick="filterPapers('All')">All</button>
+      <button onclick="filterPapers('Law/Politics')">Law/Politics</button>
+      <button onclick="filterPapers('STEM')">STEM</button>
+      <button onclick="filterPapers('Articles')">Articles</button>
     </div>
+    <div id="papersList" class="papers-list" aria-live="polite"></div>
   </section>
 
   <section id="submission" class="page">
@@ -267,14 +253,50 @@ section.page.active {
 </main>
 
 <script>
-function toggleMenu() {
+const papers = [
+  {title:"Sample Paper 1", author:"Alice", date:"2025-11-01", category:"STEM", url:"sample1.pdf"},
+  {title:"Sample Paper 2", author:"Bob", date:"2025-11-05", category:"Law/Politics", url:"sample2.pdf"},
+  {title:"Sample Paper 3", author:"Charlie", date:"2025-11-08", category:"Articles", url:"sample3.pdf"}
+];
+
+let currentFilter = 'All';
+
+function toggleMenu(){
   document.getElementById('dropdownMenu').classList.toggle('show');
 }
-function showSection(id) {
-  document.querySelectorAll('.page').forEach(s => s.classList.remove('active'));
+
+function showSection(id){
+  document.querySelectorAll('.page').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   document.getElementById('dropdownMenu').classList.remove('show');
+  if(id==='papers') renderPapers();
 }
+
+function filterPapers(category){
+  currentFilter = category;
+  renderPapers();
+}
+
+function renderPapers(){
+  const container = document.getElementById('papersList');
+  container.innerHTML='';
+  let filtered = papers.filter(p => currentFilter==='All' || p.category===currentFilter);
+  if(!filtered.length){
+    container.innerHTML='<div class="lead">No papers uploaded yet.</div>';
+    return;
+  }
+  filtered.forEach(p=>{
+    const card = document.createElement('div');
+    card.className='paper-card';
+    card.onclick = ()=>window.open(p.url,'_blank');
+    card.innerHTML=`<div class="paper-title">${p.title}</div>
+                    <div class="paper-meta">Author: ${p.author} | Date: ${p.date} | Category: ${p.category}</div>`;
+    container.appendChild(card);
+  });
+}
+
+// Initial render if on Papers page
+if(document.getElementById('papers').classList.contains('active')) renderPapers();
 </script>
 </body>
 </html>
