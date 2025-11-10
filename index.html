@@ -20,23 +20,20 @@ html,body{height:100%;scroll-behavior:smooth;}
 body{
   font-family:"Poppins",system-ui,Segoe UI,Roboto,sans-serif;
   color:var(--cream);
-  background: radial-gradient(at 20% 30%, var(--navy) 0%, transparent 60%),
-              radial-gradient(at 80% 20%, var(--navy2) 0%, transparent 60%),
-              radial-gradient(at 50% 80%, var(--deep-cream) 0%, transparent 60%),
-              radial-gradient(at 30% 60%, var(--light-blue) 0%, transparent 60%),
-              radial-gradient(at 70% 70%, var(--brown) 0%, transparent 60%);
-  background-size: 200% 200%;
-  animation: bgShift 40s ease-in-out infinite;
+  background: radial-gradient(circle at 30% 30%, var(--navy) 0%, var(--navy2) 35%, var(--deep-cream) 80%, var(--brown) 120%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
   overflow-x:hidden;
   text-align:center;
 }
 
-@keyframes bgShift {
-  0% {background-position: 0% 50%, 50% 0%, 100% 100%, 0% 100%, 50% 50%;}
-  25% {background-position: 50% 100%, 100% 50%, 0% 50%, 50% 0%, 75% 25%;}
-  50% {background-position: 100% 50%, 0% 100%, 50% 0%, 100% 50%, 25% 75%;}
-  75% {background-position: 50% 0%, 100% 100%, 0% 50%, 75% 75%, 50% 25%;}
-  100% {background-position: 0% 50%, 50% 0%, 100% 100%, 0% 100%, 50% 50%;}
+/* prevent weird banding on small screens */
+@media (max-width: 600px) {
+  body {
+    background: radial-gradient(circle at 40% 40%, var(--navy) 0%, var(--navy2) 50%, var(--deep-cream) 85%, var(--brown) 120%);
+    background-size: cover;
+  }
 }
 
 /* HEADER */
@@ -77,6 +74,7 @@ header nav a{
   padding:6px 14px;
   border-radius:6px;
   white-space:nowrap;
+  font-family:"Poppins",sans-serif;
 }
 header nav a:hover{color:var(--light-blue);background:rgba(255,255,255,0.03)}
 header .admin-btn, header .menu-btn{
@@ -107,8 +105,9 @@ section.page{
 }
 
 /* TITLES & TEXT */
-.title{
-  font-family:"Playfair Display",serif;
+.title, h2, .section-title{
+  font-family:"Playfair Display",serif !important;
+  font-weight:700;
   font-size:clamp(1.6rem,5vw,2.2rem);
   color:var(--cream);
   line-height:1.15;
@@ -137,7 +136,7 @@ section.page{
 }
 .cta:hover{transform:translateY(-2px);filter:brightness(1.03)}
 
-/* PAPERS FILTER BUTTONS */
+/* FILTER BUTTONS */
 .filter-btns{
   display:flex;
   gap:12px;
@@ -161,7 +160,7 @@ section.page{
   color:var(--navy);
 }
 
-/* PAPERS LIST */
+/* PAPER LIST */
 .papers-list{
   display:flex;
   flex-direction:column;
@@ -183,17 +182,9 @@ section.page{
   align-items:center;
   text-align:center;
   gap:8px;
-  overflow-wrap:break-word;
-}
-iframe.pdf-frame{
-  width:100%;
-  max-width:95%;
-  height:260px;
-  border:1px solid rgba(10,18,26,0.1);
-  border-radius:6px;
 }
 
-/* ADMIN UPLOAD FORM */
+/* ADMIN FORM */
 .upload-wrap{
   display:flex;
   flex-direction:column;
@@ -201,11 +192,6 @@ iframe.pdf-frame{
   width:100%;
   max-width:500px;
   text-align:left;
-}
-.upload-wrap .field{
-  display:flex;
-  flex-direction:column;
-  gap:4px;
 }
 .upload-wrap input, .upload-wrap textarea, .upload-wrap select{
   padding:6px 8px;
@@ -219,31 +205,9 @@ iframe.pdf-frame{
   align-self:center;
 }
 
-/* MODAL */
-.modal-back{
-  position:fixed;
-  inset:0;
-  background:rgba(6,10,14,0.6);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:1500;
-}
-.modal{
-  background:var(--cream);
-  color:var(--navy);
-  padding:14px;
-  border-radius:10px;
-  max-width:90%;
-  box-shadow:0 14px 45px rgba(0,0,0,0.35);
-}
-
-/* MOBILE HEADER & TEXT ADJUSTMENTS */
+/* MOBILE HEADER */
 @media (max-width:600px){
   header .header-container{
-    flex-direction:row;
-    justify-content:space-between;
-    align-items:center;
     height:45px;
     padding:6px 12px;
   }
@@ -263,22 +227,16 @@ iframe.pdf-frame{
     z-index:999;
   }
   header nav.show{max-height:400px;}
-  
-  header .menu-btn, header .admin-btn{
-    font-size:0.9rem;
-    padding:6px 14px;
-  }
-  
-  /* VERTICAL CENTERING & HORIZONTAL PADDING ON MOBILE */
   section.page{
     justify-content:center;
+    align-items:center;
+    text-align:center;
     min-height:calc(100vh - 45px);
     width:90%;
     margin:0 auto;
   }
-  .title{font-size:clamp(1.8rem,5vw,2.4rem);}
+  .title, h2, .section-title{font-size:clamp(1.8rem,6vw,2.4rem);}
   .lead{font-size:clamp(1rem,2.5vw,1.1rem);}
-  .cta{font-size:1rem;}
 }
 </style>
 </head>
@@ -301,76 +259,61 @@ iframe.pdf-frame{
 </header>
 
 <main>
-<!-- HOME -->
 <section id="home" class="page">
   <div>
     <div class="title">Empowering Young Minds, One Paper at a Time</div>
     <div class="lead">
-      GlobalYouthJournal is a youth-led initiative providing a <strong>FREE</strong> platform for student researchers and journalists to publish their work. Made by youth, for youth — with a student review process that values learning and accessibility.
+      GlobalYouthJournal is a youth-led initiative providing a <strong>FREE</strong> platform for student researchers and journalists to publish their work. Made by youth, for youth.
     </div>
     <button class="cta" onclick="showSection('submission')">Submit Your Work</button>
   </div>
 </section>
 
-<!-- ABOUT -->
 <section id="about" class="page">
-  <h2 class="section-title">About Us</h2>
-  <div class="lead">
-    The <strong>GlobalYouthJournal</strong> is a youth-led initiative that allows young, skilled researchers and journalists to publish their work without any fees — just a short student review period. This website exists for youth, made by youth. We aim to help you achieve your goals with minimal restrictions.
-  </div>
+  <h2>About Us</h2>
+  <div class="lead">The <strong>GlobalYouthJournal</strong> is a youth-led initiative allowing young researchers to publish their work freely and learn collaboratively.</div>
 </section>
 
-<!-- PAPERS -->
 <section id="papers" class="page">
-  <h2 class="section-title">Papers</h2>
+  <h2>Papers</h2>
   <div class="filter-btns">
     <button class="active" onclick="filterPapers('All')">All</button>
     <button onclick="filterPapers('Law/Politics')">Law/Politics</button>
     <button onclick="filterPapers('STEM')">STEM</button>
     <button onclick="filterPapers('Articles')">Articles</button>
   </div>
-  <div class="muted">Browse published student research. Admins can delete papers.</div>
-  <div class="center-line"></div>
-  <div id="papersList" class="papers-list" aria-live="polite"></div>
+  <div id="papersList" class="papers-list"></div>
 </section>
 
-<!-- SUBMISSION -->
 <section id="submission" class="page">
-  <h2 class="section-title">Submission</h2>
-  <div class="lead">To submit your research or journalistic work for review, please use our <a href="https://forms.gle/YxuU2xm9nnJsaJyb8" target="_blank" style="color:var(--light-blue)">Google Form</a>. This is for public submissions only.</div>
+  <h2>Submission</h2>
+  <div class="lead">Submit your paper via our <a href="https://forms.gle/YxuU2xm9nnJsaJyb8" target="_blank" style="color:var(--light-blue)">Google Form</a>.</div>
 </section>
 
-<!-- ADMIN UPLOAD -->
 <section id="submit" class="page">
-  <h2 class="section-title">Admin Upload</h2>
-  <div class="muted">Only admins can upload PDFs for display on the Papers page.</div>
+  <h2>Admin Upload</h2>
   <div id="uploadForm" class="upload-wrap" style="display:none;">
-    <div class="field"><label>Paper Title</label><input type="text" id="paperTitle"></div>
-    <div class="field"><label>Author(s)</label><input type="text" id="paperAuthor"></div>
-    <div class="field"><label>Date</label><input type="date" id="paperDate"></div>
-    <div class="field"><label>Category</label>
-      <select id="paperCategory">
-        <option value="Law/Politics">Law/Politics</option>
-        <option value="STEM">STEM</option>
-        <option value="Articles">Articles</option>
-      </select>
-    </div>
-    <div class="field"><label>Short Description</label><textarea id="paperDesc"></textarea></div>
-    <div class="field"><label>PDF File</label><input type="file" id="paperPDF" accept="application/pdf"></div>
+    <label>Paper Title</label><input type="text" id="paperTitle">
+    <label>Author(s)</label><input type="text" id="paperAuthor">
+    <label>Date</label><input type="date" id="paperDate">
+    <label>Category</label>
+    <select id="paperCategory">
+      <option value="Law/Politics">Law/Politics</option>
+      <option value="STEM">STEM</option>
+      <option value="Articles">Articles</option>
+    </select>
+    <label>Description</label><textarea id="paperDesc"></textarea>
+    <label>PDF File</label><input type="file" id="paperPDF" accept="application/pdf">
     <button class="cta" onclick="submitPaper()">Upload Paper</button>
   </div>
 </section>
-
 </main>
 
 <div id="modal" class="modal-back">
   <div class="modal">
     <h4>Enter Admin Password</h4>
     <input type="password" id="adminPass" placeholder="Admin password">
-    <div class="controls">
-      <button class="btn-small" onclick="verifyAdmin()">Submit</button>
-      <button class="btn-small" onclick="closeModal()">Cancel</button>
-    </div>
+    <button class="cta" onclick="verifyAdmin()">Submit</button>
   </div>
 </div>
 
@@ -384,78 +327,54 @@ function showSection(id){
   document.querySelectorAll('.page').forEach(s=>s.style.display='none');
   document.getElementById(id).style.display='flex';
   if(id==='papers') renderPapers();
-  toggleMenu(true); // close mobile menu
+  toggleMenu(true);
 }
-
 function toggleMenu(forceClose=false){
   const nav=document.getElementById('navLinks');
-  if(forceClose){nav.classList.remove('show'); return;}
+  if(forceClose){nav.classList.remove('show');return;}
   nav.classList.toggle('show');
 }
-
-function adminToggle(){document.getElementById('modal').style.display='flex'}
-function closeModal(){document.getElementById('modal').style.display='none'}
-
+function adminToggle(){document.getElementById('modal').style.display='flex';}
 function verifyAdmin(){
   let val=document.getElementById('adminPass').value;
   if(val===ADMIN_PASSWORD){
     isAdmin=true;
-    alert('Admin access granted!');
     document.getElementById('uploadForm').style.display='flex';
-    closeModal();
+    document.getElementById('modal').style.display='none';
   } else alert('Incorrect password');
 }
-
 function submitPaper(){
-  let title=document.getElementById('paperTitle').value.trim();
-  let author=document.getElementById('paperAuthor').value.trim();
-  let date=document.getElementById('paperDate').value;
-  let category=document.getElementById('paperCategory').value;
-  let desc=document.getElementById('paperDesc').value.trim();
-  let file=document.getElementById('paperPDF').files[0];
-  if(!title||!author||!date||!desc||!file){alert('All fields required');return;}
-  let reader=new FileReader();
-  reader.onload=function(e){
-    papers.push({title,author,date,category,desc,data:e.target.result,name:file.name});
+  let t=document.getElementById('paperTitle').value;
+  let a=document.getElementById('paperAuthor').value;
+  let d=document.getElementById('paperDate').value;
+  let c=document.getElementById('paperCategory').value;
+  let desc=document.getElementById('paperDesc').value;
+  let f=document.getElementById('paperPDF').files[0];
+  if(!t||!a||!d||!desc||!f){alert('Fill all fields');return;}
+  let r=new FileReader();
+  r.onload=function(e){
+    papers.push({title:t,author:a,date:d,category:c,desc:desc,data:e.target.result});
     localStorage.setItem('papers',JSON.stringify(papers));
-    alert('Paper uploaded!');
-    document.getElementById('paperTitle').value='';
-    document.getElementById('paperAuthor').value='';
-    document.getElementById('paperDate').value='';
-    document.getElementById('paperDesc').value='';
-    document.getElementById('paperPDF').value='';
     renderPapers();
+    alert('Paper uploaded!');
   }
-  reader.readAsDataURL(file);
+  r.readAsDataURL(f);
 }
-
-function filterPapers(category){
-  currentFilter=category;
-  document.querySelectorAll('.filter-btns button').forEach(btn=>{
-    btn.classList.remove('active');
-    if(btn.innerText===category) btn.classList.add('active');
-  });
-  renderPapers();
-}
-
+function filterPapers(cat){currentFilter=cat;renderPapers();}
 function renderPapers(){
-  let container=document.getElementById('papersList');
-  container.innerHTML='';
-  let filtered = papers.filter(p=>currentFilter==='All' || p.category===currentFilter);
-  if(!filtered.length){container.innerHTML='<div class="muted">No papers uploaded yet.</div>';return;}
-  filtered.forEach((p)=>{
-    let card=document.createElement('div');card.className='paper-card';
-    let meta=document.createElement('div');meta.className='paper-meta';
-    meta.innerHTML=`<h3>${p.title}</h3><p><strong>Author(s):</strong> ${p.author}</p><p><strong>Date:</strong> ${p.date}</p><p><strong>Category:</strong> ${p.category}</p><p>${p.desc}</p>`;
-    card.appendChild(meta);
-    let pdfFrame=document.createElement('iframe');pdfFrame.src=p.data;pdfFrame.className='pdf-frame';
-    card.appendChild(pdfFrame);
-    if(isAdmin){
-      let delBtn=document.createElement('button');delBtn.className='btn-small btn-del';delBtn.innerText='Delete';
-      delBtn.onclick=()=>{if(confirm('Delete this paper?')){papers.splice(papers.indexOf(p),1);localStorage.setItem('papers',JSON.stringify(papers));renderPapers();}};
-      card.appendChild(delBtn);
-    }
-    container.appendChild(card);
+  let list=document.getElementById('papersList');
+  list.innerHTML='';
+  let filtered=papers.filter(p=>currentFilter==='All'||p.category===currentFilter);
+  if(!filtered.length){list.innerHTML='<p>No papers yet.</p>';return;}
+  filtered.forEach(p=>{
+    let card=document.createElement('div');
+    card.className='paper-card';
+    card.innerHTML=`<h3 style="font-family:'Playfair Display',serif;">${p.title}</h3>
+      <p><strong>${p.author}</strong> — ${p.date}</p>
+      <p>${p.category}</p>
+      <p>${p.desc}</p>
+      <iframe src="${p.data}" class="pdf-frame"></iframe>`;
+    list.appendChild(card);
   });
 }
 showSection('home');
