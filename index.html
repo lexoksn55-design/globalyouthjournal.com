@@ -42,9 +42,9 @@ body{
 /* HEADER */
 header{
   position:fixed;left:0;right:0;top:0;
-  height:60px; /* thinner default header */
+  height:55px;
   display:flex;align-items:center;justify-content:space-between;
-  padding:0 20px;
+  padding:0 15px;
   background:rgba(10,18,26,0.65);
   backdrop-filter:blur(6px);
   border-bottom:1px solid rgba(255,255,255,0.03);
@@ -53,102 +53,103 @@ header{
 }
 .brand{
   font-family:"Playfair Display",serif;
-  font-size:1.3rem;
+  font-size:1.2rem;
   color:var(--cream);
-  letter-spacing:0.5px;
+  letter-spacing:0.4px;
 }
 nav{
   display:flex;
-  gap:14px;
+  gap:8px;
   align-items:center;
   flex-wrap:wrap;
-  justify-content:center;
+  justify-content:flex-end;
 }
 nav a{
   color:var(--cream);
   text-decoration:none;
   font-weight:600;
-  font-size:0.92rem;
-  padding:5px 6px;
+  font-size:0.85rem;
+  padding:3px 5px;
   border-radius:6px;
   opacity:0.95;
+  line-height:1.2;
 }
 nav a:hover{color:var(--light-blue);background:rgba(255,255,255,0.03)}
-#adminBtn{margin-top:4px}
+#adminBtn{margin-top:2px;padding:4px 6px;font-size:0.8rem;}
 
 /* MAIN CONTENT */
-main{padding-top:60px;}
+main{padding-top:55px;}
 section.page{
-  min-height:calc(100vh - 60px);
+  min-height:calc(100vh - 55px);
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
   text-align:center;
-  padding:30px 15px;
+  padding:20px 10px;
 }
 
 /* TITLES & TEXT */
 .title{
   font-family:"Playfair Display",serif;
-  font-size:clamp(1.8rem, 5vw, 2.6rem);
+  font-size:clamp(1.6rem, 5vw, 2.2rem);
   color:var(--cream);
-  line-height:1.2;
-  margin-bottom:14px;
+  line-height:1.15;
+  margin-bottom:12px;
 }
 .lead{
-  font-size:clamp(0.95rem, 2.5vw, 1.1rem);
+  font-size:clamp(0.9rem, 2.2vw, 1.05rem);
   color:rgba(255,255,255,0.92);
-  max-width:700px;
-  line-height:1.5;
+  max-width:650px;
+  line-height:1.4;
   margin:0 auto;
 }
 
 /* BUTTONS */
 .cta{
-  margin-top:18px;
-  padding:12px 24px;
+  margin-top:14px;
+  padding:10px 20px;
   border-radius:999px;
   border:none;
   background:linear-gradient(90deg,var(--brown),var(--light-blue));
   color:var(--navy);
   font-weight:700;
   cursor:pointer;
-  font-size:0.95rem;
+  font-size:0.9rem;
   transition:all 0.3s ease;
 }
-.cta:hover{transform:translateY(-3px);filter:brightness(1.03)}
+.cta:hover{transform:translateY(-2px);filter:brightness(1.03)}
 
 /* PAPERS LIST */
 .papers-list{
   display:flex;
   flex-direction:column;
-  gap:20px;
+  gap:16px;
   align-items:center;
   justify-content:center;
   width:100%;
 }
 .paper-card{
-  width:90%;
-  max-width:820px;
+  width:95%;
+  max-width:800px;
   background:linear-gradient(180deg,rgba(253,251,247,0.95),#f0ece6);
   color:var(--navy);
-  border-radius:12px;
-  padding:16px 18px;
-  box-shadow:0 6px 20px rgba(2,6,12,0.15);
+  border-radius:10px;
+  padding:14px 16px;
+  box-shadow:0 4px 18px rgba(2,6,12,0.12);
   display:flex;
   flex-direction:column;
   align-items:center;
   text-align:center;
-  gap:10px;
+  gap:8px;
   overflow-wrap:break-word;
 }
 iframe.pdf-frame{
   width:100%;
   max-width:95%;
-  height:350px;
+  height:260px;
   border:1px solid rgba(10,18,26,0.1);
-  border-radius:8px;
+  border-radius:6px;
 }
 
 /* MODAL */
@@ -158,22 +159,23 @@ iframe.pdf-frame{
 }
 .modal{
   background:var(--cream);color:var(--navy);
-  padding:16px;border-radius:12px;
+  padding:14px;border-radius:10px;
   max-width:90%;
-  box-shadow:0 18px 50px rgba(0,0,0,0.35);
+  box-shadow:0 14px 45px rgba(0,0,0,0.35);
 }
 
 /* MEDIA QUERIES */
 @media (max-width:600px){
-  header{height:50px;padding:0 12px;}
+  header{height:50px;padding:0 10px;}
   main{padding-top:50px;}
   .brand{font-size:1.1rem;}
-  nav a{font-size:0.85rem;padding:4px 5px;}
-  .title{font-size:clamp(1.6rem,5vw,2.2rem);}
-  .lead{font-size:clamp(0.9rem,2.5vw,1rem);}
-  .cta{padding:10px 20px;font-size:0.9rem;}
-  iframe.pdf-frame{height:280px;}
-  section.page{padding:20px 10px;}
+  nav a{font-size:0.8rem;padding:3px 4px;line-height:1.1;}
+  #adminBtn{font-size:0.75rem;padding:3px 5px;}
+  .title{font-size:clamp(1.4rem,5vw,2rem);}
+  .lead{font-size:clamp(0.85rem,2vw,1rem);}
+  .cta{padding:8px 16px;font-size:0.85rem;}
+  iframe.pdf-frame{height:220px;}
+  section.page{padding:15px 8px;}
 }
 </style>
 </head>
@@ -193,7 +195,6 @@ iframe.pdf-frame{
 </header>
 
 <main>
-  <!-- HOME SECTION -->
   <section id="home" class="page">
     <div>
       <div class="title">Empowering Young Minds, One Paper at a Time</div>
@@ -204,7 +205,6 @@ iframe.pdf-frame{
     </div>
   </section>
 
-  <!-- ABOUT SECTION -->
   <section id="about" class="page">
     <h2 class="section-title">About Us</h2>
     <div class="lead">
@@ -212,7 +212,6 @@ iframe.pdf-frame{
     </div>
   </section>
 
-  <!-- PAPERS SECTION -->
   <section id="papers" class="page">
     <h2 class="section-title">Papers</h2>
     <div class="filter-btns">
@@ -226,13 +225,11 @@ iframe.pdf-frame{
     <div id="papersList" class="papers-list" aria-live="polite"></div>
   </section>
 
-  <!-- SUBMISSION SECTION -->
   <section id="submission" class="page">
     <h2 class="section-title">Submission</h2>
     <div class="lead">To submit your research or journalistic work for review, please use our <a href="https://forms.gle/YxuU2xm9nnJsaJyb8" target="_blank" style="color:var(--light-blue)">Google Form</a>. This is for public submissions only.</div>
   </section>
 
-  <!-- ADMIN UPLOAD SECTION -->
   <section id="submit" class="page">
     <h2 class="section-title">Admin Upload</h2>
     <div class="muted">Only admins can upload PDFs for display on the Papers page.</div>
@@ -253,7 +250,6 @@ iframe.pdf-frame{
     </div>
   </section>
 
-  <!-- CONTACT SECTION -->
   <section id="contact" class="page">
     <h2 class="section-title">Contact</h2>
     <div class="lead" style="max-width:880px;color:rgba(255,255,255,0.9)">
