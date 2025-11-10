@@ -260,7 +260,7 @@ iframe.pdf-frame{
     z-index:999;
   }
   header nav.show{max-height:300px;}
-  
+
   header .menu-btn, header .admin-btn{
     font-size:0.85rem;
     padding:6px 14px;
@@ -385,7 +385,7 @@ function showSection(id){
   document.querySelectorAll('.page').forEach(s=>s.style.display='none');
   document.getElementById(id).style.display='flex';
   if(id==='papers') renderPapers();
-  toggleMenu(false); // close menu on mobile
+  toggleMenu(true); // close mobile menu when navigating
 }
 
 function toggleMenu(forceClose=false){
