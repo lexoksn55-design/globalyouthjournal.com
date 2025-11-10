@@ -49,8 +49,6 @@ header{
   z-index:1000;
   padding:6px 12px;
 }
-
-/* DESKTOP HEADER LAYOUT */
 header .header-container{
   display:flex;
   justify-content:space-between;
@@ -77,7 +75,6 @@ header nav a{
   border-radius:6px;
 }
 header nav a:hover{color:var(--light-blue);background:rgba(255,255,255,0.03)}
-
 header .admin-btn, header .menu-btn{
   font-size:0.9rem;
   padding:6px 12px;
@@ -236,7 +233,7 @@ iframe.pdf-frame{
   box-shadow:0 14px 45px rgba(0,0,0,0.35);
 }
 
-/* MOBILE HEADER */
+/* MOBILE HEADER & TEXT ADJUSTMENTS */
 @media (max-width:600px){
   header .header-container{
     flex-direction:row;
@@ -255,11 +252,11 @@ iframe.pdf-frame{
     max-height:0;
     overflow:hidden;
     transition:max-height 0.5s ease;
-    border:none; /* removed the weird line */
+    border:none;
     border-radius:0 0 8px 8px;
     z-index:999;
   }
-  header nav.show{max-height:400px;} /* smooth slide down */
+  header nav.show{max-height:400px;}
 
   header .menu-btn, header .admin-btn{
     font-size:0.85rem;
@@ -268,16 +265,18 @@ iframe.pdf-frame{
   
   main{padding-top:80px;}
   
+  /* TEXT LOWER & LARGER ON MOBILE */
   section.page{
     justify-content:flex-start;
-    padding-top:60px;
-    min-height:calc(100vh - 60px);
+    padding-top:120px; /* move text lower */
+    min-height:calc(100vh - 80px);
+    width:90%; /* more compact horizontally */
   }
   
-  .title{font-size:clamp(1.4rem,5vw,2rem);}
-  .lead{font-size:clamp(0.85rem,2vw,1rem);}
-  .cta{padding:8px 16px;font-size:0.85rem;}
-  iframe.pdf-frame{height:220px;}
+  .title{font-size:clamp(1.8rem,6vw,2.4rem);}
+  .lead{font-size:clamp(1rem,2.5vw,1.15rem);}
+  .cta{padding:10px 18px;font-size:0.9rem;}
+  iframe.pdf-frame{height:240px;}
   .filter-btns button{width:100%; max-width:260px;}
 }
 </style>
