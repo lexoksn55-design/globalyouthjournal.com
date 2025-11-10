@@ -1,383 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GlobalYouthJournal</title>
+<title>Global Youth Journal</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-:root{
-  --navy:#0D1B2A;
-  --navy2:#14263E;
-  --cream:#FDFBF7;
-  --deep-cream:#E6E1D8;
-  --light-blue:#A9D6E5;
-  --brown:#B08968;
+:root {
+  --navy: #0D1B2A;
+  --navy2: #14263E;
+  --cream: #FDFBF7;
+  --deep-cream: #E6E1D8;
+  --light-blue: #A9D6E5;
+  --brown: #B08968;
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;scroll-behavior:smooth;}
-body{
-  font-family:"Poppins",system-ui,Segoe UI,Roboto,sans-serif;
-  color:var(--cream);
-  background: radial-gradient(circle at 30% 30%, var(--navy) 0%, var(--navy2) 35%, var(--deep-cream) 80%, var(--brown) 120%);
-  background-attachment: fixed;
-  background-repeat: no-repeat;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Poppins", system-ui, sans-serif;
+  color: var(--cream);
+  background: radial-gradient(at 20% 30%, var(--navy) 0%, transparent 60%),
+              radial-gradient(at 80% 20%, var(--navy2) 0%, transparent 60%),
+              radial-gradient(at 50% 80%, var(--deep-cream) 0%, transparent 60%),
+              radial-gradient(at 30% 60%, var(--light-blue) 0%, transparent 60%),
+              radial-gradient(at 70% 70%, var(--brown) 0%, transparent 60%);
   background-size: cover;
-  overflow-x:hidden;
-  text-align:center;
+  background-repeat: no-repeat;
+  animation: bgShift 40s ease-in-out infinite;
+  overflow-x: hidden;
+  min-height: 100vh;
+  text-align: center;
 }
 
-/* prevent weird banding on small screens */
-@media (max-width: 600px) {
-  body {
-    background: radial-gradient(circle at 40% 40%, var(--navy) 0%, var(--navy2) 50%, var(--deep-cream) 85%, var(--brown) 120%);
-    background-size: cover;
-  }
+@keyframes bgShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* HEADER */
-header{
-  position:fixed;
-  top:0; left:0; right:0;
-  background:rgba(10,18,26,0.85);
-  backdrop-filter:blur(6px);
-  z-index:1000;
-  width:100%;
-}
-header .header-container{
-  max-width:1200px;
-  margin:0 auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:6px 12px;
-  height:50px;
-}
-header .brand{
-  font-family:"Playfair Display",serif;
-  font-size:1.3rem;
-  color:var(--cream);
-  letter-spacing:0.4px;
-  white-space:nowrap;
-}
-header nav{
-  display:flex;
-  gap:12px;
-  align-items:center;
-}
-header nav a{
-  color:var(--cream);
-  text-decoration:none;
-  font-weight:600;
-  font-size:0.9rem;
-  padding:6px 14px;
-  border-radius:6px;
-  white-space:nowrap;
-  font-family:"Poppins",sans-serif;
-}
-header nav a:hover{color:var(--light-blue);background:rgba(255,255,255,0.03)}
-header .admin-btn, header .menu-btn{
-  font-size:0.9rem;
-  padding:6px 14px;
-  cursor:pointer;
-  border-radius:6px;
-  border:1px solid var(--cream);
-  color:var(--cream);
-  background:none;
-  transition:0.2s;
-  white-space:nowrap;
-}
-header .admin-btn:hover, header .menu-btn:hover{
-  background:var(--cream); color:var(--navy);
+header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10, 18, 26, 0.65);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding: 10px 20px;
+  z-index: 1000;
 }
 
-/* MAIN CONTENT */
-main{padding-top:70px;}
-section.page{
-  min-height:calc(100vh - 70px);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:20px 12px;
+.brand {
+  font-family: "Playfair Display", serif;
+  font-size: 1.3rem;
+  color: var(--cream);
 }
 
-/* TITLES & TEXT */
-.title, h2, .section-title{
-  font-family:"Playfair Display",serif !important;
-  font-weight:700;
-  font-size:clamp(1.6rem,5vw,2.2rem);
-  color:var(--cream);
-  line-height:1.15;
-  margin-bottom:12px;
-}
-.lead{
-  font-size:clamp(0.9rem,2.2vw,1.05rem);
-  color:rgba(255,255,255,0.92);
-  max-width:650px;
-  line-height:1.4;
-  margin:0 auto;
+.nav-buttons {
+  display: flex;
+  gap: 10px;
 }
 
-/* BUTTONS */
-.cta{
-  margin-top:14px;
-  padding:10px 20px;
-  border-radius:999px;
-  border:none;
-  background:linear-gradient(90deg,var(--brown),var(--light-blue));
-  color:var(--navy);
-  font-weight:700;
-  cursor:pointer;
-  font-size:0.9rem;
-  transition:all 0.3s ease;
-}
-.cta:hover{transform:translateY(-2px);filter:brightness(1.03)}
-
-/* FILTER BUTTONS */
-.filter-btns{
-  display:flex;
-  gap:12px;
-  justify-content:center;
-  flex-wrap:wrap;
-  margin-bottom:20px;
-}
-.filter-btns button{
-  padding:12px 22px;
-  border-radius:10px;
-  border:none;
-  background:var(--navy2);
-  color:var(--cream);
-  cursor:pointer;
-  font-weight:600;
-  font-size:1.05rem;
-  transition:all 0.3s ease;
-}
-.filter-btns button.active{
-  background:var(--light-blue);
-  color:var(--navy);
+.menu-btn, .admin-btn {
+  background: none;
+  border: 1px solid var(--cream);
+  color: var(--cream);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-/* PAPER LIST */
-.papers-list{
-  display:flex;
-  flex-direction:column;
-  gap:16px;
-  align-items:center;
-  justify-content:center;
-  width:100%;
-}
-.paper-card{
-  width:95%;
-  max-width:800px;
-  background:linear-gradient(180deg,rgba(253,251,247,0.95),#f0ece6);
-  color:var(--navy);
-  border-radius:10px;
-  padding:14px 16px;
-  box-shadow:0 4px 18px rgba(2,6,12,0.12);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  text-align:center;
-  gap:8px;
+.menu-btn:hover, .admin-btn:hover {
+  background: var(--light-blue);
+  color: var(--navy);
 }
 
-/* ADMIN FORM */
-.upload-wrap{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  width:100%;
-  max-width:500px;
-  text-align:left;
-}
-.upload-wrap input, .upload-wrap textarea, .upload-wrap select{
-  padding:6px 8px;
-  border-radius:6px;
-  border:1px solid rgba(255,255,255,0.3);
-  background:rgba(255,255,255,0.95);
-  color:var(--navy);
-  font-size:0.9rem;
-}
-.upload-wrap button{
-  align-self:center;
+.dropdown {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: rgba(10,18,26,0.95);
+  width: 100%;
+  max-width: 280px;
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
+  animation: slideDown 0.3s ease forwards;
 }
 
-/* MOBILE HEADER */
-@media (max-width:600px){
-  header .header-container{
-    height:45px;
-    padding:6px 12px;
+.dropdown a {
+  color: var(--cream);
+  padding: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.dropdown a:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.show {
+  display: flex;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* MAIN */
+main {
+  padding-top: 80px;
+}
+
+section.page {
+  min-height: calc(100vh - 80px);
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+section.page.active {
+  display: flex;
+}
+
+.title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2rem, 6vw, 2.8rem);
+  color: var(--cream);
+  margin-bottom: 18px;
+}
+
+.lead {
+  font-size: clamp(1rem, 2.4vw, 1.2rem);
+  max-width: 720px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.9);
+}
+
+.filter-btns {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.filter-btns button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background: var(--navy2);
+  color: var(--cream);
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.filter-btns button:hover {
+  background: var(--light-blue);
+  color: var(--navy);
+}
+
+/* MOBILE */
+@media (max-width: 700px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 18px;
   }
-  header nav{
-    position:absolute;
-    top:45px;
-    left:0;
-    right:0;
-    background:rgba(10,18,26,0.95);
-    flex-direction:column;
-    align-items:center;
-    gap:8px;
-    max-height:0;
-    overflow:hidden;
-    transition:max-height 0.4s ease;
-    border-radius:0 0 8px 8px;
-    z-index:999;
+
+  .brand {
+    margin-bottom: 8px;
   }
-  header nav.show{max-height:400px;}
-  section.page{
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    min-height:calc(100vh - 45px);
-    width:90%;
-    margin:0 auto;
+
+  .nav-buttons {
+    width: 100%;
+    justify-content: space-between;
   }
-  .title, h2, .section-title{font-size:clamp(1.8rem,6vw,2.4rem);}
-  .lead{font-size:clamp(1rem,2.5vw,1.1rem);}
+
+  .menu-btn, .admin-btn {
+    flex: 1;
+    text-align: center;
+    padding: 8px;
+    border-radius: 8px;
+  }
+
+  .dropdown {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  section.page {
+    padding: 20px;
+    justify-content: center;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .lead {
+    font-size: 1rem;
+  }
 }
 </style>
 </head>
+
 <body>
 <header>
-  <div class="header-container">
-    <div class="brand">GlobalYouthJournal</div>
-    <nav id="navLinks">
-      <a href="javascript:void(0)" onclick="showSection('home')">Home</a>
-      <a href="javascript:void(0)" onclick="showSection('about')">About</a>
-      <a href="javascript:void(0)" onclick="showSection('papers')">Papers</a>
-      <a href="javascript:void(0)" onclick="showSection('submission')">Submission</a>
-      <a href="javascript:void(0)" onclick="showSection('submit')">Admin Upload</a>
-    </nav>
-    <div style="display:flex;gap:6px;align-items:center;">
-      <button class="menu-btn" onclick="toggleMenu()">Menu</button>
-      <button class="admin-btn" onclick="adminToggle()">Admin Login</button>
-    </div>
+  <div class="brand">Global Youth Journal</div>
+  <div class="nav-buttons">
+    <button class="menu-btn" onclick="toggleMenu()">Menu</button>
+    <button class="admin-btn" onclick="showSection('submit')">Admin</button>
+  </div>
+  <div id="dropdownMenu" class="dropdown">
+    <a href="#" onclick="showSection('home')">Home</a>
+    <a href="#" onclick="showSection('about')">About</a>
+    <a href="#" onclick="showSection('papers')">Papers</a>
+    <a href="#" onclick="showSection('submission')">Submission</a>
   </div>
 </header>
 
 <main>
-<section id="home" class="page">
-  <div>
+  <section id="home" class="page active">
     <div class="title">Empowering Young Minds, One Paper at a Time</div>
-    <div class="lead">
-      GlobalYouthJournal is a youth-led initiative providing a <strong>FREE</strong> platform for student researchers and journalists to publish their work. Made by youth, for youth.
+    <div class="lead">GlobalYouthJournal is a youth-led initiative providing a <strong>free</strong> platform for student researchers and journalists to publish their work.</div>
+  </section>
+
+  <section id="about" class="page">
+    <div class="title">About Us</div>
+    <div class="lead">The Global Youth Journal allows young researchers to publish their work without fees, with a short student review process and a mission to make research accessible for all.</div>
+  </section>
+
+  <section id="papers" class="page">
+    <div class="title">Papers</div>
+    <div class="lead">Browse published student research by category.</div>
+    <div class="filter-btns">
+      <button>All</button>
+      <button>Law/Politics</button>
+      <button>STEM</button>
+      <button>Articles</button>
     </div>
-    <button class="cta" onclick="showSection('submission')">Submit Your Work</button>
-  </div>
-</section>
+  </section>
 
-<section id="about" class="page">
-  <h2>About Us</h2>
-  <div class="lead">The <strong>GlobalYouthJournal</strong> is a youth-led initiative allowing young researchers to publish their work freely and learn collaboratively.</div>
-</section>
+  <section id="submission" class="page">
+    <div class="title">Submission</div>
+    <div class="lead">Submit your research using our <a href="https://forms.gle/YxuU2xm9nnJsaJyb8" target="_blank" style="color:var(--light-blue)">Google Form</a>.</div>
+  </section>
 
-<section id="papers" class="page">
-  <h2>Papers</h2>
-  <div class="filter-btns">
-    <button class="active" onclick="filterPapers('All')">All</button>
-    <button onclick="filterPapers('Law/Politics')">Law/Politics</button>
-    <button onclick="filterPapers('STEM')">STEM</button>
-    <button onclick="filterPapers('Articles')">Articles</button>
-  </div>
-  <div id="papersList" class="papers-list"></div>
-</section>
-
-<section id="submission" class="page">
-  <h2>Submission</h2>
-  <div class="lead">Submit your paper via our <a href="https://forms.gle/YxuU2xm9nnJsaJyb8" target="_blank" style="color:var(--light-blue)">Google Form</a>.</div>
-</section>
-
-<section id="submit" class="page">
-  <h2>Admin Upload</h2>
-  <div id="uploadForm" class="upload-wrap" style="display:none;">
-    <label>Paper Title</label><input type="text" id="paperTitle">
-    <label>Author(s)</label><input type="text" id="paperAuthor">
-    <label>Date</label><input type="date" id="paperDate">
-    <label>Category</label>
-    <select id="paperCategory">
-      <option value="Law/Politics">Law/Politics</option>
-      <option value="STEM">STEM</option>
-      <option value="Articles">Articles</option>
-    </select>
-    <label>Description</label><textarea id="paperDesc"></textarea>
-    <label>PDF File</label><input type="file" id="paperPDF" accept="application/pdf">
-    <button class="cta" onclick="submitPaper()">Upload Paper</button>
-  </div>
-</section>
+  <section id="submit" class="page">
+    <div class="title">Admin Upload</div>
+    <div class="lead">Authorized admins may upload student papers for display.</div>
+  </section>
 </main>
 
-<div id="modal" class="modal-back">
-  <div class="modal">
-    <h4>Enter Admin Password</h4>
-    <input type="password" id="adminPass" placeholder="Admin password">
-    <button class="cta" onclick="verifyAdmin()">Submit</button>
-  </div>
-</div>
-
 <script>
-const ADMIN_PASSWORD="OctObeR7@2009#";
-let isAdmin=false;
-let papers=JSON.parse(localStorage.getItem('papers')||'[]');
-let currentFilter='All';
-
-function showSection(id){
-  document.querySelectorAll('.page').forEach(s=>s.style.display='none');
-  document.getElementById(id).style.display='flex';
-  if(id==='papers') renderPapers();
-  toggleMenu(true);
+function toggleMenu() {
+  document.getElementById('dropdownMenu').classList.toggle('show');
 }
-function toggleMenu(forceClose=false){
-  const nav=document.getElementById('navLinks');
-  if(forceClose){nav.classList.remove('show');return;}
-  nav.classList.toggle('show');
+function showSection(id) {
+  document.querySelectorAll('.page').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById('dropdownMenu').classList.remove('show');
 }
-function adminToggle(){document.getElementById('modal').style.display='flex';}
-function verifyAdmin(){
-  let val=document.getElementById('adminPass').value;
-  if(val===ADMIN_PASSWORD){
-    isAdmin=true;
-    document.getElementById('uploadForm').style.display='flex';
-    document.getElementById('modal').style.display='none';
-  } else alert('Incorrect password');
-}
-function submitPaper(){
-  let t=document.getElementById('paperTitle').value;
-  let a=document.getElementById('paperAuthor').value;
-  let d=document.getElementById('paperDate').value;
-  let c=document.getElementById('paperCategory').value;
-  let desc=document.getElementById('paperDesc').value;
-  let f=document.getElementById('paperPDF').files[0];
-  if(!t||!a||!d||!desc||!f){alert('Fill all fields');return;}
-  let r=new FileReader();
-  r.onload=function(e){
-    papers.push({title:t,author:a,date:d,category:c,desc:desc,data:e.target.result});
-    localStorage.setItem('papers',JSON.stringify(papers));
-    renderPapers();
-    alert('Paper uploaded!');
-  }
-  r.readAsDataURL(f);
-}
-function filterPapers(cat){currentFilter=cat;renderPapers();}
-function renderPapers(){
-  let list=document.getElementById('papersList');
-  list.innerHTML='';
-  let filtered=papers.filter(p=>currentFilter==='All'||p.category===currentFilter);
-  if(!filtered.length){list.innerHTML='<p>No papers yet.</p>';return;}
-  filtered.forEach(p=>{
-    let card=document.createElement('div');
-    card.className='paper-card';
-    card.innerHTML=`<h3 style="font-family:'Playfair Display',serif;">${p.title}</h3>
-      <p><strong>${p.author}</strong> — ${p.date}</p>
-      <p>${p.category}</p>
-      <p>${p.desc}</p>
-      <iframe src="${p.data}" class="pdf-frame"></iframe>`;
-    list.appendChild(card);
-  });
-}
-showSection('home');
 </script>
 </body>
 </html>
