@@ -46,7 +46,6 @@ header{
   top:0; left:0; right:0;
   background:rgba(10,18,26,0.65);
   backdrop-filter:blur(6px);
-  border-bottom:1px solid rgba(255,255,255,0.03);
   z-index:1000;
   padding:6px 12px;
 }
@@ -153,7 +152,7 @@ section.page{
   cursor:pointer;
   font-weight:600;
   font-size:1.05rem;
-  transition:all 0.2s ease;
+  transition:all 0.3s ease;
 }
 .filter-btns button.active{
   background:var(--light-blue);
@@ -245,21 +244,22 @@ iframe.pdf-frame{
     height:38px;
   }
   header nav{
-    position:absolute;
-    top:38px;
-    left:0; right:0;
+    position:relative;
+    top:0;
+    left:0;
+    right:0;
     background:rgba(10,18,26,0.95);
     flex-direction:column;
     align-items:center;
     gap:8px;
     max-height:0;
     overflow:hidden;
-    transition:max-height 0.4s ease;
-    border-bottom:1px solid var(--cream);
+    transition:max-height 0.5s ease;
+    border:none; /* removed the weird line */
     border-radius:0 0 8px 8px;
     z-index:999;
   }
-  header nav.show{max-height:300px;}
+  header nav.show{max-height:400px;} /* smooth slide down */
 
   header .menu-btn, header .admin-btn{
     font-size:0.85rem;
@@ -268,7 +268,6 @@ iframe.pdf-frame{
   
   main{padding-top:80px;}
   
-  /* move content slightly higher and fill more page */
   section.page{
     justify-content:flex-start;
     padding-top:60px;
@@ -283,7 +282,6 @@ iframe.pdf-frame{
 }
 </style>
 </head>
-
 <body>
 <header>
   <div class="header-container">
@@ -303,65 +301,66 @@ iframe.pdf-frame{
 </header>
 
 <main>
-  <!-- HOME -->
-  <section id="home" class="page">
-    <div>
-      <div class="title">Empowering Young Minds, One Paper at a Time</div>
-      <div class="lead">
-        GlobalYouthJournal is a youth-led initiative providing a <strong>FREE</strong> platform for student researchers and journalists to publish their work. Made by youth, for youth — with a student review process that values learning and accessibility.
-      </div>
-      <button class="cta" onclick="showSection('submission')">Submit Your Work</button>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about" class="page">
-    <h2 class="section-title">About Us</h2>
+<!-- HOME -->
+<section id="home" class="page">
+  <div>
+    <div class="title">Empowering Young Minds, One Paper at a Time</div>
     <div class="lead">
-      The <strong>GlobalYouthJournal</strong> is a youth-led initiative that allows young, skilled researchers and journalists to publish their work without any fees — just a short student review period. This website exists for youth, made by youth. We aim to help you achieve your goals with minimal restrictions.
+      GlobalYouthJournal is a youth-led initiative providing a <strong>FREE</strong> platform for student researchers and journalists to publish their work. Made by youth, for youth — with a student review process that values learning and accessibility.
     </div>
-  </section>
+    <button class="cta" onclick="showSection('submission')">Submit Your Work</button>
+  </div>
+</section>
 
-  <!-- PAPERS -->
-  <section id="papers" class="page">
-    <h2 class="section-title">Papers</h2>
-    <div class="filter-btns">
-      <button class="active" onclick="filterPapers('All')">All</button>
-      <button onclick="filterPapers('Law/Politics')">Law/Politics</button>
-      <button onclick="filterPapers('STEM')">STEM</button>
-      <button onclick="filterPapers('Articles')">Articles</button>
+<!-- ABOUT -->
+<section id="about" class="page">
+  <h2 class="section-title">About Us</h2>
+  <div class="lead">
+    The <strong>GlobalYouthJournal</strong> is a youth-led initiative that allows young, skilled researchers and journalists to publish their work without any fees — just a short student review period. This website exists for youth, made by youth. We aim to help you achieve your goals with minimal restrictions.
+  </div>
+</section>
+
+<!-- PAPERS -->
+<section id="papers" class="page">
+  <h2 class="section-title">Papers</h2>
+  <div class="filter-btns">
+    <button class="active" onclick="filterPapers('All')">All</button>
+    <button onclick="filterPapers('Law/Politics')">Law/Politics</button>
+    <button onclick="filterPapers('STEM')">STEM</button>
+    <button onclick="filterPapers('Articles')">Articles</button>
+  </div>
+  <div class="muted">Browse published student research. Admins can delete papers.</div>
+  <div class="center-line"></div>
+  <div id="papersList" class="papers-list" aria-live="polite"></div>
+</section>
+
+<!-- SUBMISSION -->
+<section id="submission" class="page">
+  <h2 class="section-title">Submission</h2>
+  <div class="lead">To submit your research or journalistic work for review, please use our <a href="https://forms.gle/YxuU2xm9nnJsaJyb8" target="_blank" style="color:var(--light-blue)">Google Form</a>. This is for public submissions only.</div>
+</section>
+
+<!-- ADMIN UPLOAD -->
+<section id="submit" class="page">
+  <h2 class="section-title">Admin Upload</h2>
+  <div class="muted">Only admins can upload PDFs for display on the Papers page.</div>
+  <div id="uploadForm" class="upload-wrap" style="display:none;">
+    <div class="field"><label>Paper Title</label><input type="text" id="paperTitle"></div>
+    <div class="field"><label>Author(s)</label><input type="text" id="paperAuthor"></div>
+    <div class="field"><label>Date</label><input type="date" id="paperDate"></div>
+    <div class="field"><label>Category</label>
+      <select id="paperCategory">
+        <option value="Law/Politics">Law/Politics</option>
+        <option value="STEM">STEM</option>
+        <option value="Articles">Articles</option>
+      </select>
     </div>
-    <div class="muted">Browse published student research. Admins can delete papers.</div>
-    <div class="center-line"></div>
-    <div id="papersList" class="papers-list" aria-live="polite"></div>
-  </section>
+    <div class="field"><label>Short Description</label><textarea id="paperDesc"></textarea></div>
+    <div class="field"><label>PDF File</label><input type="file" id="paperPDF" accept="application/pdf"></div>
+    <button class="cta" onclick="submitPaper()">Upload Paper</button>
+  </div>
+</section>
 
-  <!-- SUBMISSION -->
-  <section id="submission" class="page">
-    <h2 class="section-title">Submission</h2>
-    <div class="lead">To submit your research or journalistic work for review, please use our <a href="https://forms.gle/YxuU2xm9nnJsaJyb8" target="_blank" style="color:var(--light-blue)">Google Form</a>. This is for public submissions only.</div>
-  </section>
-
-  <!-- ADMIN UPLOAD -->
-  <section id="submit" class="page">
-    <h2 class="section-title">Admin Upload</h2>
-    <div class="muted">Only admins can upload PDFs for display on the Papers page.</div>
-    <div id="uploadForm" class="upload-wrap" style="display:none;">
-      <div class="field"><label>Paper Title</label><input type="text" id="paperTitle"></div>
-      <div class="field"><label>Author(s)</label><input type="text" id="paperAuthor"></div>
-      <div class="field"><label>Date</label><input type="date" id="paperDate"></div>
-      <div class="field"><label>Category</label>
-        <select id="paperCategory">
-          <option value="Law/Politics">Law/Politics</option>
-          <option value="STEM">STEM</option>
-          <option value="Articles">Articles</option>
-        </select>
-      </div>
-      <div class="field"><label>Short Description</label><textarea id="paperDesc"></textarea></div>
-      <div class="field"><label>PDF File</label><input type="file" id="paperPDF" accept="application/pdf"></div>
-      <button class="cta" onclick="submitPaper()">Upload Paper</button>
-    </div>
-  </section>
 </main>
 
 <div id="modal" class="modal-back">
