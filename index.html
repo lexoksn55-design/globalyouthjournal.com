@@ -43,15 +43,18 @@ body{
 header{
   position:fixed;
   top:0; left:0; right:0;
-  background:rgba(10,18,26,0.65);
+  background:rgba(10,18,26,0.85);
   backdrop-filter:blur(6px);
   z-index:1000;
-  padding:6px 12px;
+  width:100%;
 }
 header .header-container{
+  max-width:1200px;
+  margin:0 auto;
   display:flex;
   justify-content:space-between;
   align-items:center;
+  padding:6px 12px;
   height:50px;
 }
 header .brand{
@@ -59,6 +62,7 @@ header .brand{
   font-size:1.3rem;
   color:var(--cream);
   letter-spacing:0.4px;
+  white-space:nowrap;
 }
 header nav{
   display:flex;
@@ -70,8 +74,9 @@ header nav a{
   text-decoration:none;
   font-weight:600;
   font-size:0.9rem;
-  padding:6px 12px;
+  padding:6px 14px;
   border-radius:6px;
+  white-space:nowrap;
 }
 header nav a:hover{color:var(--light-blue);background:rgba(255,255,255,0.03)}
 header .admin-btn, header .menu-btn{
@@ -83,6 +88,7 @@ header .admin-btn, header .menu-btn{
   color:var(--cream);
   background:none;
   transition:0.2s;
+  white-space:nowrap;
 }
 header .admin-btn:hover, header .menu-btn:hover{
   background:var(--cream); color:var(--navy);
@@ -237,11 +243,13 @@ iframe.pdf-frame{
   header .header-container{
     flex-direction:row;
     justify-content:space-between;
-    height:40px;
+    align-items:center;
+    height:45px;
+    padding:6px 12px;
   }
   header nav{
-    position:relative;
-    top:0;
+    position:absolute;
+    top:45px;
     left:0;
     right:0;
     background:rgba(10,18,26,0.95);
@@ -251,25 +259,26 @@ iframe.pdf-frame{
     max-height:0;
     overflow:hidden;
     transition:max-height 0.4s ease;
-    border:none;
     border-radius:0 0 8px 8px;
     z-index:999;
   }
   header nav.show{max-height:400px;}
-
+  
   header .menu-btn, header .admin-btn{
     font-size:0.9rem;
     padding:6px 14px;
   }
   
-  main{padding-top:70px;}
-  
-  /* VERTICAL CENTERING ON MOBILE */
+  /* VERTICAL CENTERING & HORIZONTAL PADDING ON MOBILE */
   section.page{
     justify-content:center;
-    min-height:calc(100vh - 70px);
+    min-height:calc(100vh - 45px);
     width:90%;
+    margin:0 auto;
   }
+  .title{font-size:clamp(1.8rem,5vw,2.4rem);}
+  .lead{font-size:clamp(1rem,2.5vw,1.1rem);}
+  .cta{font-size:1rem;}
 }
 </style>
 </head>
@@ -375,7 +384,7 @@ function showSection(id){
   document.querySelectorAll('.page').forEach(s=>s.style.display='none');
   document.getElementById(id).style.display='flex';
   if(id==='papers') renderPapers();
-  toggleMenu(true); // close mobile menu when navigating
+  toggleMenu(true); // close mobile menu
 }
 
 function toggleMenu(forceClose=false){
