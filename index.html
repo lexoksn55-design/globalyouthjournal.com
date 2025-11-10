@@ -56,68 +56,26 @@ header{
 
 .brand{font-family:"Playfair Display",serif;font-size:1.4rem;color:var(--cream);letter-spacing:0.6px}
 
-.nav-buttons{display:flex;gap:10px}
-
-.menu-btn, .admin-btn{
-  background:none;
-  border:1px solid var(--cream);
-  color:var(--cream);
-  font-weight:600;
-  padding:6px 14px;
-  border-radius:6px;
-  cursor:pointer;
-  transition:all 0.3s ease;
-}
-
-.menu-btn:hover, .admin-btn:hover{
-  background: var(--light-blue);
-  color: var(--navy);
-}
-
-.dropdown{
-  display:none;
-  flex-direction:column;
-  position:absolute;
-  top:72px;
-  right:28px;
-  background: rgba(10,18,26,0.95);
-  border-radius:0 0 10px 10px;
-  overflow:hidden;
-}
-
-.dropdown a{
-  padding:12px;
-  text-decoration:none;
-  color: var(--cream);
-  font-weight:600;
-  border-top:1px solid rgba(255,255,255,0.1);
-}
-
-.dropdown a:hover{
-  background: rgba(255,255,255,0.1);
-}
-
-.show{display:flex; animation:slideDown 0.3s ease forwards;}
-
-@keyframes slideDown{
-  from {opacity:0; transform:translateY(-10px);}
-  to {opacity:1; transform:translateY(0);}
-}
+nav{display:flex; gap:18px; align-items:center; flex-wrap:wrap; justify-content:center;}
+nav a{color:var(--cream); text-decoration:none; font-weight:600; font-size:0.98rem; padding:6px 8px; border-radius:8px; opacity:0.95;}
+nav a:hover{color:var(--light-blue); background:rgba(255,255,255,0.03);}
+#adminBtn{margin-top:6px;}
 
 /* MAIN */
-main{padding-top:80px}
+main{padding-top:72px;}
 
 section.page{
-  min-height:calc(100vh - 80px);
+  min-height:calc(100vh - 72px);
   display:flex;
   flex-direction:column;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
+  text-align:center;
   padding:40px 20px;
   display:none;
 }
 
-section.page.active{display:flex}
+section.page.active{display:flex;}
 
 .title{
   font-family:"Playfair Display",serif;
@@ -192,9 +150,9 @@ section.page.active{display:flex}
 @media (max-width:700px){
   header{flex-direction:column;align-items:flex-start;padding:12px 18px}
   .brand{margin-bottom:8px}
-  .nav-buttons{width:100%;justify-content:space-between}
-  .menu-btn, .admin-btn{flex:1;text-align:center;padding:8px;border-radius:8px}
-  .dropdown{width:100%;right:0;text-align:center}
+  nav{flex-direction:column;width:100%;}
+  nav a{padding:10px;width:100%;text-align:center;}
+  #adminBtn{width:100%;margin-top:6px;}
   section.page{padding:20px;justify-content:center}
   .title{font-size:1.8rem}
   .lead{font-size:1rem}
@@ -206,27 +164,28 @@ section.page.active{display:flex}
 <body>
 <header>
   <div class="brand">Global Youth Journal</div>
-  <div class="nav-buttons">
-    <button class="menu-btn" onclick="toggleMenu()">Menu</button>
-    <button class="admin-btn" onclick="showSection('submit')">Admin</button>
-  </div>
-  <div id="dropdownMenu" class="dropdown">
+  <nav>
     <a href="#" onclick="showSection('home')">Home</a>
     <a href="#" onclick="showSection('about')">About</a>
     <a href="#" onclick="showSection('papers')">Papers</a>
     <a href="#" onclick="showSection('submission')">Submission</a>
-  </div>
+    <button id="adminBtn" onclick="showSection('submit')">Admin Upload</button>
+  </nav>
 </header>
 
 <main>
   <section id="home" class="page active">
     <div class="title">Empowering Young Minds, One Paper at a Time</div>
-    <div class="lead">GlobalYouthJournal is a youth-led initiative providing a <strong>FREE</strong> platform for student researchers and journalists to publish their work.</div>
+    <div class="lead">
+      GlobalYouthJournal is a youth-led initiative providing a <strong>FREE</strong> platform for student researchers and journalists to publish their work. Made by youth, for youth — with a student review process that values learning and accessibility.
+    </div>
   </section>
 
   <section id="about" class="page">
     <div class="title">About Us</div>
-    <div class="lead">The Global Youth Journal allows young researchers to publish their work without fees, with a short student review process and a mission to make research accessible for all.</div>
+    <div class="lead">
+      The <strong>GlobalYouthJournal</strong> is a youth-led initiative that allows young, skilled researchers and journalists to publish their work without any fees — just a short student review period. This website exists for youth, made by youth. We aim to help you achieve your goals with minimal restrictions.
+    </div>
   </section>
 
   <section id="papers" class="page">
@@ -243,32 +202,26 @@ section.page.active{display:flex}
 
   <section id="submission" class="page">
     <div class="title">Submission</div>
-    <div class="lead">Submit your research using our <a href="https://forms.gle/YxuU2xm9nnJsaJyb8" target="_blank" style="color:var(--light-blue)">Google Form</a>.</div>
+    <div class="lead">
+      To submit your research or journalistic work for review, please use our <a href="https://forms.gle/YxuU2xm9nnJsaJyb8" target="_blank" style="color:var(--light-blue)">Google Form</a>. This is for public submissions only.
+    </div>
   </section>
 
   <section id="submit" class="page">
     <div class="title">Admin Upload</div>
-    <div class="lead">Authorized admins may upload student papers for display.</div>
+    <div class="lead">
+      Only admins can upload PDFs for display on the Papers page.
+    </div>
   </section>
 </main>
 
 <script>
-const papers = [
-  {title:"Sample Paper 1", author:"Alice", date:"2025-11-01", category:"STEM", url:"sample1.pdf"},
-  {title:"Sample Paper 2", author:"Bob", date:"2025-11-05", category:"Law/Politics", url:"sample2.pdf"},
-  {title:"Sample Paper 3", author:"Charlie", date:"2025-11-08", category:"Articles", url:"sample3.pdf"}
-];
-
+let papers = JSON.parse(localStorage.getItem('papers')||'[]');
 let currentFilter = 'All';
-
-function toggleMenu(){
-  document.getElementById('dropdownMenu').classList.toggle('show');
-}
 
 function showSection(id){
   document.querySelectorAll('.page').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  document.getElementById('dropdownMenu').classList.remove('show');
   if(id==='papers') renderPapers();
 }
 
@@ -295,7 +248,7 @@ function renderPapers(){
   });
 }
 
-// Initial render if on Papers page
+// Initial render if Papers page is active
 if(document.getElementById('papers').classList.contains('active')) renderPapers();
 </script>
 </body>
