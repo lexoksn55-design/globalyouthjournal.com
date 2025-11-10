@@ -15,7 +15,6 @@
   --brown:#B08968;
 }
 
-/* GLOBAL STYLES */
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;scroll-behavior:smooth;}
 body{
@@ -71,13 +70,13 @@ header nav a{
   text-decoration:none;
   font-weight:600;
   font-size:0.9rem;
-  padding:4px 8px;
+  padding:6px 12px;
   border-radius:6px;
 }
 header nav a:hover{color:var(--light-blue);background:rgba(255,255,255,0.03)}
 header .admin-btn, header .menu-btn{
   font-size:0.9rem;
-  padding:6px 12px;
+  padding:6px 14px;
   cursor:pointer;
   border-radius:6px;
   border:1px solid var(--cream);
@@ -238,7 +237,7 @@ iframe.pdf-frame{
   header .header-container{
     flex-direction:row;
     justify-content:space-between;
-    height:38px;
+    height:40px;
   }
   header nav{
     position:relative;
@@ -251,7 +250,7 @@ iframe.pdf-frame{
     gap:8px;
     max-height:0;
     overflow:hidden;
-    transition:max-height 0.5s ease;
+    transition:max-height 0.4s ease;
     border:none;
     border-radius:0 0 8px 8px;
     z-index:999;
@@ -259,25 +258,18 @@ iframe.pdf-frame{
   header nav.show{max-height:400px;}
 
   header .menu-btn, header .admin-btn{
-    font-size:0.85rem;
+    font-size:0.9rem;
     padding:6px 14px;
   }
   
-  main{padding-top:80px;}
+  main{padding-top:70px;}
   
-  /* TEXT LOWER & LARGER ON MOBILE */
+  /* VERTICAL CENTERING ON MOBILE */
   section.page{
-    justify-content:flex-start;
-    padding-top:120px; /* move text lower */
-    min-height:calc(100vh - 80px);
-    width:90%; /* more compact horizontally */
+    justify-content:center;
+    min-height:calc(100vh - 70px);
+    width:90%;
   }
-  
-  .title{font-size:clamp(1.8rem,6vw,2.4rem);}
-  .lead{font-size:clamp(1rem,2.5vw,1.15rem);}
-  .cta{padding:10px 18px;font-size:0.9rem;}
-  iframe.pdf-frame{height:240px;}
-  .filter-btns button{width:100%; max-width:260px;}
 }
 </style>
 </head>
@@ -293,7 +285,7 @@ iframe.pdf-frame{
       <a href="javascript:void(0)" onclick="showSection('submit')">Admin Upload</a>
     </nav>
     <div style="display:flex;gap:6px;align-items:center;">
-      <button class="menu-btn" onclick="toggleMenu()">☰ Menu</button>
+      <button class="menu-btn" onclick="toggleMenu()">Menu</button>
       <button class="admin-btn" onclick="adminToggle()">Admin Login</button>
     </div>
   </div>
@@ -457,7 +449,6 @@ function renderPapers(){
     container.appendChild(card);
   });
 }
-
 showSection('home');
 </script>
 </body>
