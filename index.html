@@ -256,6 +256,20 @@ iframe.pdf-frame{
     z-index:999;
   }
   header nav.show{max-height:400px;}
+
+  header .menu-btn, header .admin-btn{
+    font-size:0.9rem;
+    padding:6px 14px;
+  }
+  
+  main{padding-top:70px;}
+  
+  /* VERTICAL CENTERING ON MOBILE */
+  section.page{
+    justify-content:center;
+    min-height:calc(100vh - 70px);
+    width:90%;
+  }
 }
 </style>
 </head>
@@ -306,7 +320,9 @@ iframe.pdf-frame{
     <button onclick="filterPapers('STEM')">STEM</button>
     <button onclick="filterPapers('Articles')">Articles</button>
   </div>
-  <div id="papersList" class="papers-list"></div>
+  <div class="muted">Browse published student research. Admins can delete papers.</div>
+  <div class="center-line"></div>
+  <div id="papersList" class="papers-list" aria-live="polite"></div>
 </section>
 
 <!-- SUBMISSION -->
@@ -335,6 +351,7 @@ iframe.pdf-frame{
     <button class="cta" onclick="submitPaper()">Upload Paper</button>
   </div>
 </section>
+
 </main>
 
 <div id="modal" class="modal-back">
@@ -358,7 +375,7 @@ function showSection(id){
   document.querySelectorAll('.page').forEach(s=>s.style.display='none');
   document.getElementById(id).style.display='flex';
   if(id==='papers') renderPapers();
-  toggleMenu(true);
+  toggleMenu(true); // close mobile menu when navigating
 }
 
 function toggleMenu(forceClose=false){
@@ -393,6 +410,11 @@ function submitPaper(){
     papers.push({title,author,date,category,desc,data:e.target.result,name:file.name});
     localStorage.setItem('papers',JSON.stringify(papers));
     alert('Paper uploaded!');
+    document.getElementById('paperTitle').value='';
+    document.getElementById('paperAuthor').value='';
+    document.getElementById('paperDate').value='';
+    document.getElementById('paperDesc').value='';
+    document.getElementById('paperPDF').value='';
     renderPapers();
   }
   reader.readAsDataURL(file);
@@ -410,15 +432,20 @@ function filterPapers(category){
 function renderPapers(){
   let container=document.getElementById('papersList');
   container.innerHTML='';
-  let filtered=papers.filter(p=>currentFilter==='All'||p.category===currentFilter);
+  let filtered = papers.filter(p=>currentFilter==='All' || p.category===currentFilter);
   if(!filtered.length){container.innerHTML='<div class="muted">No papers uploaded yet.</div>';return;}
-  filtered.forEach(p=>{
-    let card=document.createElement('div');
-    card.className='paper-card';
-    card.innerHTML=`<h3>${p.title}</h3><p><strong>Author(s):</strong> ${p.author}</p><p><strong>Date:</strong> ${p.date}</p><p><strong>Category:</strong> ${p.category}</p><p>${p.desc}</p>`;
-    let iframe=document.createElement('iframe');
-    iframe.src=p.data;iframe.className='pdf-frame';
-    card.appendChild(iframe);
+  filtered.forEach((p)=>{
+    let card=document.createElement('div');card.className='paper-card';
+    let meta=document.createElement('div');meta.className='paper-meta';
+    meta.innerHTML=`<h3>${p.title}</h3><p><strong>Author(s):</strong> ${p.author}</p><p><strong>Date:</strong> ${p.date}</p><p><strong>Category:</strong> ${p.category}</p><p>${p.desc}</p>`;
+    card.appendChild(meta);
+    let pdfFrame=document.createElement('iframe');pdfFrame.src=p.data;pdfFrame.className='pdf-frame';
+    card.appendChild(pdfFrame);
+    if(isAdmin){
+      let delBtn=document.createElement('button');delBtn.className='btn-small btn-del';delBtn.innerText='Delete';
+      delBtn.onclick=()=>{if(confirm('Delete this paper?')){papers.splice(papers.indexOf(p),1);localStorage.setItem('papers',JSON.stringify(papers));renderPapers();}};
+      card.appendChild(delBtn);
+    }
     container.appendChild(card);
   });
 }
