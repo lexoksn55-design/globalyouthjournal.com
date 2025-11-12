@@ -60,10 +60,13 @@ header .brand{
   color:var(--cream);
   letter-spacing:0.4px;
 }
+/* Desktop nav */
 header nav{
   display:flex;
   gap:12px;
   align-items:center;
+  justify-content:center;
+  flex:1;
 }
 header nav a{
   color:var(--cream);
@@ -74,6 +77,7 @@ header nav a{
   border-radius:6px;
 }
 header nav a:hover{color:var(--light-blue);background:rgba(255,255,255,0.03)}
+/* Admin button */
 header .admin-btn{
   font-size:0.9rem;
   padding:6px 14px;
@@ -232,24 +236,34 @@ iframe.pdf-frame{
   box-shadow:0 14px 45px rgba(0,0,0,0.35);
 }
 
-/* MOBILE HEADER & TEXT ADJUSTMENTS */
+/* MOBILE NAV */
 @media (max-width:600px){
+  header .header-container{
+    flex-direction:column;
+    height:auto;
+    padding:8px;
+  }
   header nav{
-    position:relative;
     display:flex;
     flex-direction:column;
+    width:100%;
     align-items:center;
     gap:12px;
-    margin-bottom:12px;
-    width:100%;
+    margin-top:8px;
+    background:rgba(10,18,26,0.9);
+    padding:12px 0;
   }
-
-  main{padding-top:70px;}
-  
-  /* VERTICAL CENTERING ON MOBILE */
+  header nav a{
+    padding:12px 0;
+    font-size:1.1rem;
+    width:100%;
+    text-align:center;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+  }
+  main{padding-top:150px;} /* extra space for mobile nav */
   section.page{
-    justify-content:flex-start;
-    min-height:calc(100vh - 70px);
+    justify-content:center;
+    min-height:calc(100vh - 150px);
     width:90%;
   }
 }
@@ -259,7 +273,7 @@ iframe.pdf-frame{
 <header>
   <div class="header-container">
     <div class="brand">GlobalYouthJournal</div>
-    <nav id="navLinks">
+    <nav>
       <a href="javascript:void(0)" onclick="showSection('home')">Home</a>
       <a href="javascript:void(0)" onclick="showSection('about')">About</a>
       <a href="javascript:void(0)" onclick="showSection('papers')">Papers</a>
@@ -353,6 +367,7 @@ let currentFilter='All';
 function showSection(id){
   document.querySelectorAll('.page').forEach(s=>s.style.display='none');
   document.getElementById(id).style.display='flex';
+  if(id==='papers') renderPapers();
 }
 
 function adminToggle(){document.getElementById('modal').style.display='flex'}
