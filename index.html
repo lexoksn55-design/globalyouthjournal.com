@@ -74,7 +74,7 @@ header nav a{
   border-radius:6px;
 }
 header nav a:hover{color:var(--light-blue);background:rgba(255,255,255,0.03)}
-header .admin-btn, header .menu-btn{
+header .admin-btn{
   font-size:0.9rem;
   padding:6px 14px;
   cursor:pointer;
@@ -84,7 +84,7 @@ header .admin-btn, header .menu-btn{
   background:none;
   transition:0.2s;
 }
-header .admin-btn:hover, header .menu-btn:hover{
+header .admin-btn:hover{
   background:var(--cream); color:var(--navy);
 }
 
@@ -248,35 +248,28 @@ iframe.pdf-frame{
     flex-direction:column;
     align-items:center;
     gap:8px;
-    max-height:0;
+    max-height:400px;
     overflow:hidden;
-    transition:max-height 0.4s ease;
     border:none;
     border-radius:0 0 8px 8px;
     z-index:999;
   }
-  header nav.show{max-height:400px;}
 
-  header .menu-btn, header .admin-btn{
-    font-size:0.9rem;
-    padding:6px 14px;
-  }
-  
   main{padding-top:70px;}
-  
-  /* VERTICAL CENTERING ON MOBILE */
+
+  /* CENTER CONTENT ON MOBILE */
   section.page{
     justify-content:center;
     min-height:calc(100vh - 70px);
-    width:90%;
-    text-align:center; /* center horizontally */
+    width:100%;
+    text-align:center;
   }
-}
-
-/* HIDE MENU BUTTON ON DESKTOP */
-@media (min-width:601px){
-  .menu-btn{
-    display:none;
+  section.page > div{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:0 12px;
   }
 }
 </style>
@@ -293,7 +286,6 @@ iframe.pdf-frame{
       <a href="javascript:void(0)" onclick="showSection('submit')">Admin Upload</a>
     </nav>
     <div style="display:flex;gap:6px;align-items:center;">
-      <button class="menu-btn" onclick="toggleMenu()">Menu</button>
       <button class="admin-btn" onclick="adminToggle()">Admin Login</button>
     </div>
   </div>
@@ -383,13 +375,6 @@ function showSection(id){
   document.querySelectorAll('.page').forEach(s=>s.style.display='none');
   document.getElementById(id).style.display='flex';
   if(id==='papers') renderPapers();
-  toggleMenu(true); // close mobile menu when navigating
-}
-
-function toggleMenu(forceClose=false){
-  const nav=document.getElementById('navLinks');
-  if(forceClose){nav.classList.remove('show'); return;}
-  nav.classList.toggle('show');
 }
 
 function adminToggle(){document.getElementById('modal').style.display='flex'}
@@ -458,13 +443,6 @@ function renderPapers(){
   });
 }
 showSection('home');
-
-// Mobile menu toggle
-const menuBtn = document.querySelector('.menu-btn');
-const nav = document.getElementById('navLinks');
-menuBtn.addEventListener('click', () => {
-  nav.classList.toggle('show');
-});
 </script>
 </body>
 </html>
