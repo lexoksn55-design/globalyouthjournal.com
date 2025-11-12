@@ -74,7 +74,7 @@ header nav a{
   border-radius:6px;
 }
 header nav a:hover{color:var(--light-blue);background:rgba(255,255,255,0.03)}
-header .admin-btn{
+header .admin-btn, header .menu-btn{
   font-size:0.9rem;
   padding:6px 14px;
   cursor:pointer;
@@ -84,7 +84,7 @@ header .admin-btn{
   background:none;
   transition:0.2s;
 }
-header .admin-btn:hover{
+header .admin-btn:hover, header .menu-btn:hover{
   background:var(--cream); color:var(--navy);
 }
 
@@ -239,20 +239,45 @@ iframe.pdf-frame{
     justify-content:space-between;
     height:40px;
   }
+
   header nav{
-    position:relative;
-    top:0;
+    position:absolute;
+    top:40px;
     left:0;
     right:0;
-    background:rgba(10,18,26,0.95);
+    display:flex;
     flex-direction:column;
     align-items:center;
-    gap:8px;
-    max-height:400px;
-    overflow:hidden;
-    border:none;
+    background:rgba(10,18,26,0.95);
+    gap:12px;
+    max-height:0;
+    overflow-y:auto;
+    height:calc(100vh - 40px);
+    transition:max-height 0.4s ease;
     border-radius:0 0 8px 8px;
     z-index:999;
+  }
+  header nav.show{max-height:calc(100vh - 40px);}
+
+  header nav a{
+    white-space:nowrap;
+    padding:10px 16px;
+    font-size:1rem;
+    width:100%;
+    text-align:center;
+  }
+
+  /* show menu button only on mobile */
+  header .menu-btn{
+    display:block;
+    font-size:0.9rem;
+    padding:6px 14px;
+  }
+
+  header .admin-btn{
+    font-size:0.9rem;
+    padding:6px 10px;
+    border-radius:6px;
   }
 
   main{padding-top:70px;}
@@ -272,6 +297,13 @@ iframe.pdf-frame{
     padding:0 12px;
   }
 }
+
+/* HIDE MENU BUTTON ON DESKTOP */
+@media (min-width:601px){
+  header .menu-btn{
+    display:none;
+  }
+}
 </style>
 </head>
 <body>
@@ -286,6 +318,7 @@ iframe.pdf-frame{
       <a href="javascript:void(0)" onclick="showSection('submit')">Admin Upload</a>
     </nav>
     <div style="display:flex;gap:6px;align-items:center;">
+      <button class="menu-btn" onclick="toggleMenu()">Menu</button>
       <button class="admin-btn" onclick="adminToggle()">Admin Login</button>
     </div>
   </div>
@@ -375,6 +408,13 @@ function showSection(id){
   document.querySelectorAll('.page').forEach(s=>s.style.display='none');
   document.getElementById(id).style.display='flex';
   if(id==='papers') renderPapers();
+  toggleMenu(true);
+}
+
+function toggleMenu(forceClose=false){
+  const nav=document.getElementById('navLinks');
+  if(forceClose){nav.classList.remove('show'); return;}
+  nav.classList.toggle('show');
 }
 
 function adminToggle(){document.getElementById('modal').style.display='flex'}
