@@ -95,25 +95,23 @@ header .admin-btn:hover{
 /* MOBILE NAV BELOW HEADER */
 .mobile-nav{
   display:none;
-  width:100%;
-  justify-content:space-around;
-  padding:8px 0;
-  background:rgba(10,18,26,0.95);
-  position:fixed;
-  top:50px;
-  left:0;
-  z-index:999;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:8px;
+  padding:10px 12px;
+  margin-top:50px; /* below header */
 }
 .mobile-nav a{
+  padding:10px 14px;
+  border-radius:10px;
+  background:var(--navy2);
   color:var(--cream);
-  text-decoration:none;
   font-weight:600;
-  padding:8px 0;
-  flex:1;
+  text-decoration:none;
+  flex:1 1 calc(50% - 16px);
   text-align:center;
-  border-radius:6px;
-  background:rgba(255,255,255,0.05);
-  margin:0 4px;
+  min-width:120px;
+  max-width:200px;
 }
 .mobile-nav a:hover{
   background:var(--light-blue);
@@ -293,7 +291,7 @@ iframe.pdf-frame{
   </div>
 </header>
 
-<!-- Mobile nav below header -->
+<!-- Mobile nav below header styled like filter buttons -->
 <div class="mobile-nav">
   <a href="javascript:void(0)" onclick="showSection('home')">Home</a>
   <a href="javascript:void(0)" onclick="showSection('about')">About</a>
@@ -457,4 +455,3 @@ showSection('home');
 </script>
 </body>
 </html>
-
