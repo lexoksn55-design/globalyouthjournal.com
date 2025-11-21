@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -101,8 +102,9 @@ header nav a:hover{color:var(--light-blue);background:rgba(255,255,255,0.03)}
 .admin-btn:hover{background:var(--cream);color:var(--navy)}
 
 /* Mobile nav below header (filter-like) */
+/* We'll keep the container fixed below header, but control visibility via JS so it only shows on the HOME page */
 .mobile-nav{
-  display:none;
+  display:none; /* default hidden; JS toggles on mobile + home */
   position:fixed;
   top: calc(var(--header-h));
   left:0;
@@ -115,26 +117,29 @@ header nav a:hover{color:var(--light-blue);background:rgba(255,255,255,0.03)}
   pointer-events:auto;
   background: transparent; /* so gradient shows through */
 }
+/* MAKE IT COMPACT — reuse the look/feel of filter-btns */
 .mobile-nav a{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  padding:9px 14px;
+  padding:8px 12px; /* slightly smaller than header nav */
   border-radius:10px;
   background:var(--navy2);
   color:var(--cream);
   text-decoration:none;
   font-weight:600;
-  font-size:0.98rem;
-  flex: 1 1 calc(50% - 18px);
-  min-width:110px;
+  font-size:0.95rem;
+  flex: 0 1 calc(50% - 16px);
+  min-width:100px;
   max-width:220px;
   margin:6px;
   box-shadow:0 8px 20px rgba(2,6,12,0.12);
 }
 .mobile-nav a:hover{background:var(--light-blue);color:var(--navy)}
 
-/* page main offset: desktop uses header only, mobile header+mobile-nav */
+/* page main offset: desktop uses header only, mobile header+mobile-nav
+   note: padding-top on main will be adjusted dynamically in JS as well to be precise,
+   but keep a safe default here. */
 main{padding-top: calc(var(--header-h));}
 
 /* page sections */
@@ -247,10 +252,7 @@ iframe.pdf-frame{width:100%;height:320px;border:1px solid rgba(10,18,26,0.08);bo
   /* hide header nav (desktop) on mobile */
   header nav{display:none;}
 
-  /* show mobile nav below header */
-  .mobile-nav{display:flex;}
-
-  /* reserve header + mobile nav area above content */
+  /* reserve header + mobile nav area above content by default (JS will fine-tune) */
   main{ padding-top: calc(var(--header-h) + var(--mobile-nav-h)); }
 
   /* center content and make it sit slightly higher */
@@ -286,7 +288,9 @@ iframe.pdf-frame{width:100%;height:320px;border:1px solid rgba(10,18,26,0.08);bo
 </header>
 
 <!-- Mobile nav (filter-style buttons) -->
-<div class="mobile-nav" aria-hidden="false">
+<!-- kept here so its fixed position (top: header) is reliable;
+     visibility is controlled by JS so it only appears on HOME + small screens -->
+<div id="mobileNav" class="mobile-nav" aria-hidden="true">
   <a href="javascript:void(0)" onclick="showSection('home')">Home</a>
   <a href="javascript:void(0)" onclick="showSection('about')">About</a>
   <a href="javascript:void(0)" onclick="showSection('papers')">Papers</a>
@@ -376,17 +380,61 @@ let isAdmin=false;
 let papers = JSON.parse(localStorage.getItem('papers') || '[]');
 let currentFilter='All';
 
+const mobileNav = document.getElementById('mobileNav');
+
+/* helper: update mobile nav visibility based on active section and viewport */
+function updateMobileNavVisibility(activeId){
+  const isSmall = window.innerWidth <= 600;
+  if(!isSmall){
+    // on larger screens mobile nav should always be hidden
+    mobileNav.style.display = 'none';
+    mobileNav.setAttribute('aria-hidden','true');
+    // ensure main offset uses header only
+    document.querySelector('main').style.paddingTop = getComputedStyle(document.documentElement).getPropertyValue('--header-h');
+    return;
+  }
+
+  // Show mobile nav only on home page
+  if(activeId === 'home'){
+    mobileNav.style.display = 'flex';
+    mobileNav.setAttribute('aria-hidden','false');
+    // make sure main leaves room for header + mobile nav
+    const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 50;
+    const mobileH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--mobile-nav-h')) || 96;
+    document.querySelector('main').style.paddingTop = (headerH + mobileH) + 'px';
+  } else {
+    mobileNav.style.display = 'none';
+    mobileNav.setAttribute('aria-hidden','true');
+    document.querySelector('main').style.paddingTop = getComputedStyle(document.documentElement).getPropertyValue('--header-h');
+  }
+}
+
 function showSection(id){
   document.querySelectorAll('.page').forEach(s=>s.style.display='none');
   const el = document.getElementById(id);
   if(el) el.style.display='flex';
   if(id==='papers') renderPapers();
+
+  // update mobile nav visibility immediately (mobile only)
+  updateMobileNavVisibility(id);
+
   // on small screens, scroll content into view below header+mobile nav
   setTimeout(()=> {
-    const topOffset = (window.innerWidth <= 600) ? (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) + parseInt(getComputedStyle(document.documentElement).getPropertyValue('--mobile-nav-h'))) : parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'));
+    const isSmall = window.innerWidth <= 600;
+    const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 50;
+    const mobileH = (isSmall && id === 'home') ? (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--mobile-nav-h')) || 96) : 0;
+    const topOffset = headerH + mobileH;
     window.scrollTo({top: topOffset, behavior:'smooth'});
   }, 80);
 }
+
+/* ensure nav visibility updates when resizing while on a page */
+window.addEventListener('resize', ()=> {
+  // determine which section is visible
+  const visible = Array.from(document.querySelectorAll('.page')).find(s => s.style.display !== 'none');
+  const id = visible ? visible.id : 'home';
+  updateMobileNavVisibility(id);
+});
 
 /* Modal controls */
 function adminToggle(){ document.getElementById('modal').style.display='flex'; document.getElementById('modal').setAttribute('aria-hidden','false'); }
