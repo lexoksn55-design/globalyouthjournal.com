@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GlobalYouthJournal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0D1B2A;
+  --navy2:#14263E;
+  --cream:#FDFBF7;
+  --deep-cream:#E6E1D8;
+  --light-blue:#A9D6E5;
+  --brown:#B08968;
+  --header-h:45px;
+  --mobile-nav-h:96px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;scroll-behavior:smooth;}
+body{
+  font-family:"Poppins",system-ui,Segoe UI,Roboto,sans-serif;
+  color:var(--cream);
+  background: radial-gradient(at 20% 30%, var(--navy) 0%, transparent 60%),
+              radial-gradient(at 80% 20%, var(--navy2) 0%, transparent 60%),
+              radial-gradient(at 50% 80%, var(--deep-cream) 0%, transparent 60%),
+              radial-gradient(at 30% 60%, var(--light-blue) 0%, transparent 60%),
+              radial-gradient(at 70% 70%, var(--brown) 0%, transparent 60%);
+  background-size: 200% 200%;
+  animation: bgShift 40s ease-in-out infinite;
+  overflow-x:hidden;
+  text-align:center;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+@keyframes bgShift {
+  0% {background-position: 0% 50%, 50% 0%, 100% 100%, 0% 100%, 50% 50%;}
+  25% {background-position: 50% 100%, 100% 50%, 0% 50%, 50% 0%, 75% 25%;}
+  50% {background-position: 100% 50%, 0% 100%, 50% 0%, 100% 50%, 25% 75%;}
+  75% {background-position: 50% 0%, 100% 100%, 0% 50%, 75% 75%, 50% 25%;}
+  100% {background-position: 0% 50%, 50% 0%, 100% 100%, 0% 100%, 50% 50%;}
+}
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:var(--header-h);
+  background:rgba(10,18,26,0.65);
+  backdrop-filter:blur(6px);
+  z-index:1100;
+  padding:0 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+}
+.brand{
+  font-family:"Playfair Display",serif;
+  font-size:1.35rem;
+  color:var(--cream);
+  letter-spacing:0.4px;
+  white-space:nowrap;
+}
+header nav{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+header nav a{
+  color:var(--cream);
+  text-decoration:none;
+  font-weight:600;
+  font-size:0.95rem;
+  padding:8px 12px;
+  border-radius:999px;
+  transition:all .2s ease;
+}
+header nav a:hover,
+header nav a.active{
+  background:rgba(169,214,229,0.18);
+  color:var(--light-blue);
+}
+.admin-btn{
+  font-size:0.92rem;
+  padding:6px 14px;
+  cursor:pointer;
+  border-radius:8px;
+  border:1px solid var(--cream);
+  color:var(--cream);
+  background:none;
+  transition:all .15s ease;
+}
+.admin-btn:hover{background:var(--cream); color:var(--navy)}
+.mobile-menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  color:var(--cream);
+  font-size:1.5rem;
+  cursor:pointer;
+  padding:5px;
+}
+.mobile-nav{
+  display:none;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:8px;
+  position:fixed;
+  top:var(--header-h);
+  left:0;
+  right:0;
+  background:rgba(10,18,26,0.95);
+  backdrop-filter:blur(6px);
+  padding:10px 12px;
+  max-height:0;
+  overflow:hidden;
+  opacity:0;
+  transition:max-height 0.3s ease-out, opacity 0.25s ease;
+  z-index:1050;
+}
+.mobile-nav.active{
+  max-height:300px;
+  overflow-y:auto;
+  opacity:1;
+}
+.mobile-nav a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 14px;
+  border-radius:10px;
+  background:var(--navy2);
+  color:var(--cream);
+  text-decoration:none;
+  font-weight:600;
+  font-size:0.98rem;
+  flex:1 1 calc(50% - 18px);
+  min-width:110px;
+  max-width:220px;
+  margin:6px;
+  box-shadow:0 8px 20px rgba(2,6,12,0.12);
+}
+.mobile-nav a:hover,
+.mobile-nav a.active{
+  background:var(--light-blue);
+  color:var(--navy);
+}
+main{padding-top:calc(var(--header-h));}
+section.page{
+  min-height:calc(100vh - var(--header-h));
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:18px 14px;
+  width:100%;
+}
+.title{
+  font-family:"Playfair Display",serif;
+  font-size:clamp(1.6rem,5vw,2.6rem);
+  color:var(--cream);
+  line-height:1.12;
+  margin-bottom:12px;
+}
+.section-title{
+  font-family:"Playfair Display",serif;
+  font-size:clamp(1.45rem,4vw,2.2rem);
+  margin-bottom:12px;
+}
+.lead{
+  font-size:clamp(0.95rem,2.2vw,1.06rem);
+  color:rgba(255,255,255,0.93);
+  max-width:720px;
+  line-height:1.45;
+  margin:0 auto;
+}
+.cta{
+  margin-top:16px;
+  padding:10px 22px;
+  border-radius:999px;
+  border:none;
+  background:linear-gradient(90deg,var(--brown),var(--light-blue));
+  color:var(--navy);
+  font-weight:700;
+  cursor:pointer;
+  font-size:1rem;
+  transition:all .22s ease;
+}
+.cta:hover{transform:translateY(-3px); filter:brightness(1.02)}
+.cta.secondary{background:linear-gradient(90deg,var(--navy2), var(--light-blue));}
+.filter-btns{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+.filter-btns button{
+  padding:12px 22px;
+  border-radius:10px;
+  border:none;
+  background:var(--navy2);
+  color:var(--cream);
+  cursor:pointer;
+  font-weight:600;
+  font-size:1.05rem;
+  transition:all .2s ease;
+}
+.filter-btns button.active{background:var(--light-blue);color:var(--navy)}
+.papers-list{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+}
+.paper-card{
+  width:95%;
+  max-width:820px;
+  background:linear-gradient(180deg,rgba(253,251,247,0.96),#f0ece6);
+  color:var(--navy);
+  border-radius:12px;
+  padding:16px;
+  box-shadow:0 10px 30px rgba(2,6,12,0.12);
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  overflow-wrap:break-word;
+}
+.paper-meta h3{margin:0 0 8px 0;font-family:"Playfair Display",serif}
+.paper-meta p{margin:4px 0;color:rgba(0,0,0,0.7);font-size:0.95rem}
+.paper-link{
+  display:inline-block;
+  margin-top:8px;
+  padding:8px 12px;
+  border-radius:8px;
+  background:var(--navy2);
+  color:var(--cream);
+  text-decoration:none;
+  font-weight:600;
+}
+.paper-link:hover{background:var(--light-blue);color:var(--navy)}
+.upload-wrap{display:flex;flex-direction:column;gap:12px;width:100%;max-width:520px;text-align:left}
+.upload-wrap .field{display:flex;flex-direction:column;gap:6px}
+.upload-wrap input,
+.upload-wrap textarea,
+.upload-wrap select{
+  padding:8px 10px;
+  border-radius:8px;
+  border:1px solid rgba(0,0,0,0.06);
+  background:rgba(255,255,255,0.95);
+  color:var(--navy);
+  font-size:0.95rem;
+}
+.modal-back{
+  position:fixed;
+  inset:0;
+  background:rgba(6,10,14,0.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:1500;
+}
+.modal{
+  background:var(--cream);
+  color:var(--navy);
+  padding:16px;
+  border-radius:10px;
+  max-width:92%;
+  width:min(420px,92%);
+  box-shadow:0 14px 45px rgba(0,0,0,0.35);
+}
+.modal .admin-btn{
+  border-color:var(--navy);
+  color:var(--navy);
+}
+.modal .admin-btn:hover{
+  background:var(--navy);
+  color:var(--cream);
+}
+@media (max-width:768px){
+  header nav{display:none;}
+  .mobile-menu-toggle{display:block;}
+  .mobile-nav{display:flex;}
+}
+@media (max-width:600px){
+  .admin-btn{font-size:0.75rem;padding:4px 8px;border-radius:6px;}
+  main{padding-top:calc(var(--header-h));}
+  section.page{justify-content:center;min-height:calc(100vh - var(--header-h));padding:16px;}
+  .page > div{margin-top:10px;width:100%;display:flex;flex-direction:column;align-items:center;}
+  .mobile-nav a{padding:10px 12px;font-size:0.95rem;min-width:100px;max-width:48%;flex:1 1 calc(50% - 16px);margin:6px 6px;}
+  .filter-btns button{padding:10px 16px;font-size:0.95rem;}
+  .paper-card{width:100%;padding:14px;}
+}
+@media (max-width:360px){
+  .mobile-nav a{flex-basis:100%;max-width:100%;}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">GlobalYouthJournal</div>
+
+  <nav aria-label="Main navigation">
+    <a href="#home" data-section="home">Home</a>
+    <a href="#about" data-section="about">About</a>
+    <a href="#papers" data-section="papers">View Papers</a>
+    <a href="#submission" data-section="submission">Submit Work</a>
+  </nav>
+
+  <div style="display:flex; gap:10px; align-items:center;">
+    <button class="mobile-menu-toggle" type="button" onclick="toggleMobileMenu()">☰</button>
+    <button class="admin-btn" type="button" onclick="adminToggle()">Admin Login</button>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobileNav" aria-hidden="true">
+  <a href="#home" data-section="home">Home</a>
+  <a href="#about" data-section="about">About</a>
+  <a href="#papers" data-section="papers">View Papers</a>
+  <a href="#submission" data-section="submission">Submit Work</a>
+</div>
+
+<main>
+  <section id="home" class="page">
+    <div>
+      <div class="title">Empowering Young Minds, One Paper at a Time</div>
+      <div class="lead">GlobalYouthJournal is a youth-led initiative providing a <strong>FREE</strong> platform for student researchers and journalists to publish their work. Made by youth, for youth — with a student review process that values learning and accessibility.</div>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+        <button class="cta" type="button" onclick="showSection('submission')">Submit Your Work</button>
+        <button class="cta" type="button" onclick="showSection('papers')">View Papers</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="page" style="display:none;">
+    <h2 class="section-title">About Us</h2>
+    <div class="lead">The <strong>GlobalYouthJournal</strong> is a youth-led initiative that allows young, skilled researchers and journalists to publish their work without any fees — just a short student review period. This website exists for youth, made by youth. We aim to help you achieve your goals with minimal restrictions.</div>
+  </section>
+
+  <section id="papers" class="page" style="display:none;">
+    <h2 class="section-title">Papers</h2>
+    <div class="filter-btns" role="tablist">
+      <button class="active" type="button" onclick="filterPapers('All')">All</button>
+      <button type="button" onclick="filterPapers('Law/Politics')">Law/Politics</button>
+      <button type="button" onclick="filterPapers('STEM')">STEM</button>
+      <button type="button" onclick="filterPapers('Articles')">Articles</button>
+    </div>
+    <div class="muted" style="color:rgba(255,255,255,0.9);margin-bottom:8px;">Browse published student research. Click a paper title to open the PDF (opens in new tab).</div>
+    <div class="center-line" style="height:1px;background:rgba(255,255,255,0.04);width:100%;margin:12px 0"></div>
+    <div id="papersList" class="papers-list" aria-live="polite"></div>
+  </section>
+
+  <section id="submission" class="page" style="display:none;">
+    <h2 class="section-title">Submission</h2>
+    <div class="lead">To submit your research or journalistic work for review, please use our <a href="https://forms.gle/YxuU2xm9nnJsaJyb8" target="_blank" rel="noopener" style="color:var(--light-blue)">Google Form</a>. This is for public submissions only.</div>
+  </section>
+
+  <section id="submit" class="page" style="display:none;">
+    <h2 class="section-title">Admin Upload</h2>
+    <div class="muted" style="color:rgba(255,255,255,0.9);margin-bottom:12px;">Only admins can upload PDFs for the Papers page.</div>
+    <div id="uploadForm" class="upload-wrap" style="display:none;">
+      <div class="field"><label for="paperTitle">Paper Title</label><input type="text" id="paperTitle" placeholder="Title"></div>
+      <div class="field"><label for="paperAuthor">Author(s)</label><input type="text" id="paperAuthor" placeholder="Author name(s)"></div>
+      <div class="field"><label for="paperDate">Date</label><input type="date" id="paperDate"></div>
+      <div class="field"><label for="paperCategory">Category</label>
+        <select id="paperCategory">
+          <option value="Law/Politics">Law/Politics</option>
+          <option value="STEM">STEM</option>
+          <option value="Articles">Articles</option>
+        </select>
+      </div>
+      <div class="field"><label for="paperDesc">Short Description</label><textarea id="paperDesc" rows="3" placeholder="Short description (optional)"></textarea></div>
+      <div class="field"><label for="paperPDF">PDF File</label><input type="file" id="paperPDF" accept="application/pdf"></div>
+      <button class="cta" type="button" onclick="submitPaper()">Upload Paper</button>
+    </div>
+  </section>
+</main>
+
+<div id="modal" class="modal-back" role="dialog" aria-hidden="true">
+  <div class="modal">
+    <h4>Admin Login</h4>
+    <input type="email" id="adminEmail" placeholder="Admin email" style="padding:8px 10px;border-radius:6px;border:1px solid rgba(0,0,0,0.08);width:100%;margin-top:8px;">
+    <input type="password" id="adminPass" placeholder="Password" style="padding:8px 10px;border-radius:6px;border:1px solid rgba(0,0,0,0.08);width:100%;margin-top:8px;">
+    <div class="controls" style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+      <button class="admin-btn" type="button" onclick="verifyAdmin()">Submit</button>
+      <button class="admin-btn" type="button" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyArUvkySpCLPk0u0UiLPla5F3Nrm9F_ALE",
+    authDomain: "globalyouthjournall.firebaseapp.com",
+    projectId: "globalyouthjournall",
+    storageBucket: "globalyouthjournall.appspot.com",
+    messagingSenderId: "339926816925",
+    appId: "1:339926816925:web:224a4f48fdba62737adc74",
+    measurementId: "G-ZWF3L1FBJY"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const storage = getStorage(app);
+  const auth = getAuth(app);
+
+  window.db = db;
+  window.storage = storage;
+  window.auth = auth;
+  window.firebaseFns = {
+    collection, addDoc, getDocs, deleteDoc, doc,
+    ref, uploadBytes, getDownloadURL, deleteObject,
+    signInWithEmailAndPassword, signOut
+  };
+
+  onAuthStateChanged(auth, async (user) => {
+    const uploadForm = document.getElementById('uploadForm');
+
+    if (!user) {
+      window.isAdmin = false;
+      if (uploadForm) uploadForm.style.display = 'none';
+      if (typeof window.renderPapers === 'function') window.renderPapers();
+      return;
+    }
+
+    try {
+      const token = await user.getIdTokenResult(true);
+      window.isAdmin = token.claims.admin === true;
+    } catch (error) {
+      console.error(error);
+      window.isAdmin = false;
+    }
+
+    if (uploadForm) {
+      uploadForm.style.display = window.isAdmin ? 'flex' : 'none';
+    }
+
+    if (typeof window.renderPapers === 'function') window.renderPapers();
+  });
+
+  if (typeof window.renderPapers === 'function') {
+    window.renderPapers();
+  }
+</script>
+
+<script>
+const sections = ['home','about','papers','submission','submit'];
+window.currentFilter = 'All';
+window.isAdmin = false;
+
+function setActiveNav(sectionId){
+  document.querySelectorAll('header nav a, .mobile-nav a').forEach(link => {
+    link.classList.toggle('active', link.dataset.section === sectionId);
+  });
+}
+
+function showSection(sectionId){
+  if (sectionId === 'submit' && !window.isAdmin) {
+    adminToggle();
+    return;
+  }
+
+  sections.forEach(id => {
+    const section = document.getElementById(id);
+    section.style.display = (id === sectionId) ? 'flex' : 'none';
+  });
+
+  setActiveNav(sectionId);
+
+  const mobileNav = document.getElementById('mobileNav');
+  mobileNav.classList.remove('active');
+  mobileNav.setAttribute('aria-hidden', 'true');
+
+  if(sectionId === 'papers' && typeof window.renderPapers === 'function'){
+    window.renderPapers();
+  }
+
+  window.location.hash = sectionId;
+}
+
+function toggleMobileMenu(){
+  const mobileNav = document.getElementById('mobileNav');
+  const isOpen = mobileNav.classList.toggle('active');
+  mobileNav.setAttribute('aria-hidden', String(!isOpen));
+}
+
+function adminToggle(){
+  document.getElementById('modal').style.display = 'flex';
+  document.getElementById('modal').setAttribute('aria-hidden', 'false');
+}
+
+function closeModal(){
+  document.getElementById('modal').style.display = 'none';
+  document.getElementById('modal').setAttribute('aria-hidden', 'true');
+  document.getElementById('adminEmail').value = '';
+  document.getElementById('adminPass').value = '';
+}
+
+async function verifyAdmin(){
+  const email = document.getElementById('adminEmail').value.trim();
+  const password = document.getElementById('adminPass').value;
+
+  if (!email || !password) {
+    alert('Enter admin email and password.');
+    return;
+  }
+
+  try {
+    await window.firebaseFns.signInWithEmailAndPassword(window.auth, email, password);
+    const token = await window.auth.currentUser.getIdTokenResult(true);
+
+    if (token.claims.admin === true) {
+      window.isAdmin = true;
+      closeModal();
+      document.getElementById('uploadForm').style.display = 'flex';
+      showSection('submit');
+      alert('Admin verified.');
+    } else {
+      await window.firebaseFns.signOut(window.auth);
+      window.isAdmin = false;
+      alert('This account is not an admin.');
+    }
+  } catch (error) {
+    console.error(error);
+    alert('Login failed.');
+  }
+}
+
+function filterPapers(category){
+  window.currentFilter = category;
+  const buttons = document.querySelectorAll('.filter-btns button');
+  buttons.forEach(b => b.classList.remove('active'));
+  buttons.forEach(b => {
+    if(b.textContent === category) b.classList.add('active');
+  });
+
+  if(typeof window.renderPapers === 'function'){
+    window.renderPapers();
+  }
+}
+
+window.renderPapers = async function renderPapers() {
+  const container = document.getElementById('papersList');
+  container.innerHTML = 'Loading papers...';
+
+  if (!window.firebaseFns || !window.db) {
+    container.innerHTML = '<div class="muted" style="color:rgba(255,255,255,0.9)">Firebase is not ready yet.</div>';
+    return;
+  }
+
+  const { collection, getDocs } = window.firebaseFns;
+
+  try {
+    const snapshot = await getDocs(collection(window.db, "papers"));
+    const papers = [];
+
+    snapshot.forEach(docSnap => {
+      papers.push({ id: docSnap.id, ...docSnap.data() });
+    });
+
+    const currentCategory = window.currentFilter || 'All';
+    const filtered = papers.filter(p => currentCategory === 'All' || p.category === currentCategory);
+
+    container.innerHTML = '';
+    if (filtered.length === 0) {
+      container.innerHTML = '<div class="muted" style="color:rgba(255,255,255,0.9)">No papers found.</div>';
+      return;
+    }
+
+    filtered.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'paper-card';
+
+      card.innerHTML = `
+        <div class="paper-meta">
+          <h3>${p.title}</h3>
+          <p><strong>Author(s):</strong> ${p.author}</p>
+          <p><strong>Date:</strong> ${p.date}</p>
+          <p><strong>Category:</strong> ${p.category || ''}</p>
+          <p style="margin-top:8px">${p.desc || ''}</p>
+        </div>
+        <a class="paper-link" href="${p.pdfUrl}" target="_blank" rel="noopener">Open PDF</a>
+      `;
+
+      if (window.isAdmin) {
+        const delBtn = document.createElement('button');
+        delBtn.className = 'admin-btn';
+        delBtn.style.marginTop = '8px';
+        delBtn.innerText = 'Delete';
+        delBtn.onclick = async () => {
+          if (confirm('Delete this paper?')) {
+            const { deleteDoc, doc, deleteObject, ref } = window.firebaseFns;
+            try {
+              await deleteDoc(doc(window.db, "papers", p.id));
+              if (p.filePath) {
+                await deleteObject(ref(window.storage, p.filePath));
+              }
+              window.renderPapers();
+            } catch (err) {
+              console.error(err);
+              alert('Error deleting paper.');
+            }
+          }
+        };
+        card.appendChild(delBtn);
+      }
+
+      container.appendChild(card);
+    });
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = '<div class="muted" style="color:rgba(255,255,255,0.9)">Error loading papers.</div>';
+  }
+};
+
+async function submitPaper() {
+  if (!window.isAdmin) {
+    alert('Admin login required.');
+    return;
+  }
+
+  const title = document.getElementById('paperTitle').value.trim();
+  const author = document.getElementById('paperAuthor').value.trim();
+  const date = document.getElementById('paperDate').value;
+  const category = document.getElementById('paperCategory').value;
+  const desc = document.getElementById('paperDesc').value.trim();
+  const file = document.getElementById('paperPDF').files[0];
+
+  if (!title || !author || !date || !file) {
+    alert('Please fill all required fields and select a PDF.');
+    return;
+  }
+
+  if (!window.firebaseFns || !window.storage || !window.db) {
+    alert('Firebase is not ready yet.');
+    return;
+  }
+
+  const { ref, uploadBytes, getDownloadURL } = window.firebaseFns;
+  const storageRef = ref(window.storage, 'papers/' + Date.now() + "_" + file.name);
+
+  try {
+    await uploadBytes(storageRef, file);
+    const url = await getDownloadURL(storageRef);
+
+    const { collection, addDoc } = window.firebaseFns;
+
+    await addDoc(collection(window.db, "papers"), {
+      title,
+      author,
+      date,
+      category,
+      desc,
+      pdfUrl: url,
+      filePath: storageRef.fullPath,
+      createdAt: new Date().toISOString()
+    });
+
+    alert('Paper uploaded successfully to Firebase!');
+
+    document.getElementById('paperTitle').value = '';
+    document.getElementById('paperAuthor').value = '';
+    document.getElementById('paperDate').value = '';
+    document.getElementById('paperDesc').value = '';
+    document.getElementById('paperPDF').value = '';
+
+    showSection('papers');
+  } catch (error) {
+    console.error(error);
+    alert('Error uploading paper. Check console for details.');
+  }
+}
+
+document.querySelectorAll('header nav a, .mobile-nav a').forEach(link => {
+  link.addEventListener('click', function(event){
+    event.preventDefault();
+    showSection(this.dataset.section);
+  });
+});
+
+document.getElementById('modal').addEventListener('click', function(event){
+  if(event.target === this){
+    closeModal();
+  }
+});
+
+const initialSection = sections.includes(window.location.hash.slice(1))
+  ? window.location.hash.slice(1)
+  : 'home';
+
+showSection(initialSection);
+</script>
+</body>
+</html>
