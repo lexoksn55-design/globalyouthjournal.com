@@ -50,9 +50,9 @@ header{
   backdrop-filter:blur(6px);
   z-index:1100;
   padding:0 16px;
-  display:flex;
+  display:grid;
+  grid-template-columns:minmax(180px,1fr) auto minmax(180px,1fr);
   align-items:center;
-  justify-content:space-between;
   gap:16px;
 }
 .brand{
@@ -61,11 +61,16 @@ header{
   color:var(--cream);
   letter-spacing:0.4px;
   white-space:nowrap;
+  justify-self:start;
+  cursor:pointer;
+  user-select:none;
 }
 header nav{
   display:flex;
   align-items:center;
+  justify-content:center;
   gap:10px;
+  justify-self:center;
 }
 header nav a{
   color:var(--cream);
@@ -80,6 +85,13 @@ header nav a:hover,
 header nav a.active{
   background:rgba(169,214,229,0.18);
   color:var(--light-blue);
+}
+.header-actions{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:10px;
+  min-width:180px;
 }
 .admin-btn{
   font-size:0.92rem;
@@ -100,6 +112,7 @@ header nav a.active{
   font-size:1.5rem;
   cursor:pointer;
   padding:5px;
+  margin-left:auto;
 }
 .mobile-nav{
   display:none;
@@ -282,7 +295,13 @@ section.page{
   color:var(--cream);
 }
 @media (max-width:768px){
+  header{
+    grid-template-columns:1fr auto;
+  }
   header nav{display:none;}
+  .header-actions{
+    min-width:auto;
+  }
   .mobile-menu-toggle{display:block;}
   .mobile-nav{display:flex;}
 }
@@ -302,7 +321,7 @@ section.page{
 </head>
 <body>
 <header>
-  <div class="brand">GlobalYouthJournal</div>
+  <div class="brand" ondblclick="adminToggle()" title="GlobalYouthJournal">GlobalYouthJournal</div>
 
   <nav aria-label="Main navigation">
     <a href="#home" data-section="home">Home</a>
@@ -311,9 +330,8 @@ section.page{
     <a href="#submission" data-section="submission">Submit Work</a>
   </nav>
 
-  <div style="display:flex; gap:10px; align-items:center;">
+  <div class="header-actions">
     <button class="mobile-menu-toggle" type="button" onclick="toggleMobileMenu()">☰</button>
-    <button class="admin-btn" type="button" onclick="adminToggle()">Admin Login</button>
   </div>
 </header>
 
@@ -701,3 +719,4 @@ showSection(initialSection);
 </script>
 </body>
 </html>
+
