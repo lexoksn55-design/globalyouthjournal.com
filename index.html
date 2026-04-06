@@ -481,12 +481,7 @@ function setActiveNav(sectionId){
   });
 }
 
-function showSection(sectionId){
-  if (sectionId === 'submit' && !window.isAdmin) {
-    adminToggle();
-    return;
-  }
-
+function renderSection(sectionId){
   sections.forEach(id => {
     const section = document.getElementById(id);
     section.style.display = (id === sectionId) ? 'flex' : 'none';
@@ -501,8 +496,22 @@ function showSection(sectionId){
   if(sectionId === 'papers' && typeof window.renderPapers === 'function'){
     window.renderPapers();
   }
+}
 
-  window.location.hash = sectionId;
+function showSection(sectionId){
+  if (sectionId === 'submit' && !window.isAdmin) {
+    adminToggle();
+    return;
+  }
+
+  const targetSection = sections.includes(sectionId) ? sectionId : 'home';
+
+  if (window.location.hash.slice(1) !== targetSection) {
+    window.location.hash = targetSection;
+    return;
+  }
+
+  renderSection(targetSection);
 }
 
 function toggleMobileMenu(){
@@ -711,11 +720,21 @@ document.getElementById('modal').addEventListener('click', function(event){
   }
 });
 
+window.addEventListener('hashchange', () => {
+  const sectionFromHash = window.location.hash.slice(1);
+  const targetSection = sections.includes(sectionFromHash) ? sectionFromHash : 'home';
+  renderSection(targetSection);
+});
+
 const initialSection = sections.includes(window.location.hash.slice(1))
   ? window.location.hash.slice(1)
   : 'home';
 
-showSection(initialSection);
+if (!window.location.hash) {
+  window.location.hash = initialSection;
+} else {
+  renderSection(initialSection);
+}
 </script>
 </body>
 </html>
