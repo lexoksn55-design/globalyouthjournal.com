@@ -17,21 +17,37 @@
   --mobile-nav-h:96px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;scroll-behavior:smooth;}
-body{
-  font-family:"Poppins",system-ui,Segoe UI,Roboto,sans-serif;
-  color:var(--cream);
-  background: radial-gradient(at 20% 30%, var(--navy) 0%, transparent 60%),
-              radial-gradient(at 80% 20%, var(--navy2) 0%, transparent 60%),
-              radial-gradient(at 50% 80%, var(--deep-cream) 0%, transparent 60%),
-              radial-gradient(at 30% 60%, var(--light-blue) 0%, transparent 60%),
-              radial-gradient(at 70% 70%, var(--brown) 0%, transparent 60%);
+html, body {
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", system-ui, Segoe UI, Roboto, sans-serif;
+  color: var(--cream);
+  background: var(--navy);
+  overflow-x: hidden;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(at 20% 30%, var(--navy) 0%, transparent 60%),
+    radial-gradient(at 80% 20%, var(--navy2) 0%, transparent 60%),
+    radial-gradient(at 50% 80%, var(--deep-cream) 0%, transparent 60%),
+    radial-gradient(at 30% 60%, var(--light-blue) 0%, transparent 60%),
+    radial-gradient(at 70% 70%, var(--brown) 0%, transparent 60%);
   background-size: 200% 200%;
   animation: bgShift 40s ease-in-out infinite;
-  overflow-x:hidden;
-  text-align:center;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
+  pointer-events: none;
+  will-change: background-position;
 }
 @keyframes bgShift {
   0% {background-position: 0% 50%, 50% 0%, 100% 100%, 0% 100%, 50% 50%;}
@@ -161,7 +177,7 @@ header nav a.active{
 }
 main{padding-top:calc(var(--header-h));}
 section.page{
-  min-height:calc(100vh - var(--header-h));
+  min-height:calc(100svh - var(--header-h));
   display:flex;
   flex-direction:column;
   align-items:center;
